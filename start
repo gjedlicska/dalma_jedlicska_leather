@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+uvicorn app.main:app --port 8000 --host 0.0.0.0

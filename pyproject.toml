@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dalma-jedlicska-leather"
+version = "0.1.0"
+description = ""
+authors = ["Gergő Jedlicska <gergo@jedlicska.com>"]
+readme = "README.md"
+packages = [{include = "src/dalma_jedlicska_leather"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.991"
+
+
+[tool.poetry.group.app.dependencies]
+fastapi = "^0.88.0"
+uvicorn = {extras = ["standard"], version = "^0.20.0"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
