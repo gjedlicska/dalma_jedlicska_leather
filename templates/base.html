@@ -9,8 +9,16 @@
 
     {% block style %}
 
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap",
+  />
+  <link
+    rel="stylesheet",
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap",
+  />
   <link 
-    href="{{url_for('static',path='/css/app.css')}}"
+    href="{{url_for('static',path='/css/style.css')}}"
     rel="stylesheet"
   />
   <link 
@@ -20,10 +28,30 @@
     {% endblock %}
 </head>
 <body>
-  <h1 class="p-4 bg-blue-400">Hello there {{self.title()}}!</h1>
-  <nav>
-    <a href="/collections">Kollekciok</a>
-  </nav>
+  <div class="flex pl-16">
+    <div class="pt-16 flex flex-col fixed top-0 h-full">
+      {% include 'components/nav.html' %}
+      <div class="absolute bottom-0 left-0 h-20">
+        <div class="flex space-x-4 h-12 items-end">
+          <div class="h-8 w-8">
+            <a href="https://www.instagram.com/dalma_jedlicska_leather/">
+              {% include 'components/instagram_icon.html' %}
+            </a>
+          </div>
+          <div class="h-8 w-8">
+            <a href="https://www.facebook.com/dalmajedlicskaleather">
+              {% include 'components/facebook_icon.html' %}
+            </a>
+          </div>
+          <div
+            class="flex-row font-body leading-snug tracking-wider font-medium"
+          >
+          <p>Dalma</p>
+          <p>Jedlicska</p> 
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- {% block header %} -->
 <!-- {% endblock %} -->
 <!-- <div class="uk-container uk-flex uk-flex-center"> -->

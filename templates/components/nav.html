@@ -1,0 +1,23 @@
+<div class="pl-16">
+  <nav class="flex flex-col font-body text-sm font-medium tracking-wide uppercase space-y-6">
+    <a class="h-24" href="/">
+      {% include 'components/logo.html' %}
+    </a>
+    <a 
+      class="flex h-8 items-center"
+      href="/collections"
+    >
+      <div class="bullet h-full w-0">
+        <svg class="w-full h-full" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="black" />
+        </svg>
+      </div>
+      <p class="label transition-colors duration-300 hover:text-sand-hover">
+        Kollekciók
+      </p>
+    </a>
+    <a href="/products">Termékek</a>
+    <a href="/stories">Történetek</a>
+    <a href="/info">Info</a>
+  </nav>
+</div>

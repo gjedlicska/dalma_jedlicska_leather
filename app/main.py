@@ -16,7 +16,7 @@ print("foo")
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request) -> HTMLResponse:
-    context = {"request": request}
+    context = {"request": request, "logo_active": True}
     response = templates.TemplateResponse("home.html", context)
     return response
 
