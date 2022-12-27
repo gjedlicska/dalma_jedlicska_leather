@@ -1,17 +1,38 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+# from fastapi_babel import Babel, BabelConfigs
+# from fastapi_babel import _  # noqa
+from pathlib import Path
+
+from fastapi.middleware import Middleware
+
+from starlette_babel import get_translator, LocaleMiddleware
+from starlette_babel.contrib.jinja import configure_jinja_env
+
+root_dir = Path(__file__).parent.parent
+
+supported_locales = ["en", "hu"]
+shared_translator = get_translator()  # process global instance
+shared_translator.load_from_directories(
+    [root_dir.joinpath("locales")]
+)  # one or multiple locale directories
 
 
-app = FastAPI()
+app = FastAPI(
+    middleware=[
+        Middleware(LocaleMiddleware, locales=supported_locales, default_locale="en"),
+    ]
+)
 templates = Jinja2Templates(directory="templates")
+configure_jinja_env(templates.env)
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
-
-print("foo")
 
 
 @app.get("/", response_class=HTMLResponse)
