@@ -5,9 +5,9 @@
      viewBox="0 0 112 128"
      style="enable-background: new 0 0 112 128"
      xml:space="preserve"
-     class="h-full {% if logo_active %}active{% endif %}">
+     class="h-full">
   <g>
-  <circle class="circle" cx="8.56" cy="8.77" r="8.36" />
+  <circle class="circle {{ 'fill-black' if logo_active else 'fill-transparent' }}" cx="8.56" cy="8.77" r="8.36" />
   <g>
   <path
   d="M55.95,103.86c-18.21,0-33.03-14.82-33.03-33.03V54.02h11v16.81c0,12.15,9.88,22.03,22.03,22.03
@@ -20,19 +20,3 @@
   />
   </g>
 </svg>
-{% block style %}
-  <style>
-  circle {
-    fill: none;
-  }
-  svg.active .circle {
-    fill: currentColor;
-  }
-  .st0 {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 11;
-    stroke-miterlimit: 10;
-  }
-  </style>
-{% endblock style %}

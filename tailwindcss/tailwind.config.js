@@ -14,6 +14,9 @@ module.exports = {
           hover: '#cdc4b8',
         },
       },
+      spacing: {
+        23: '24%',
+      },
       letterSpacing: {
         wide: '.25rem',
         widest: '.3333rem',

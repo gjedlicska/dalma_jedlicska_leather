@@ -4,8 +4,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-# from fastapi_babel import Babel, BabelConfigs
-# from fastapi_babel import _  # noqa
 from pathlib import Path
 
 from fastapi.middleware import Middleware
@@ -41,9 +39,26 @@ async def home(request: Request) -> HTMLResponse:
     response = templates.TemplateResponse("home.html", context)
     return response
 
+@app.get("/products", response_class=HTMLResponse)
+async def products(request: Request) -> HTMLResponse:
+    context = {"request": request}
+    response = templates.TemplateResponse("collections.html", context)
+    return response
 
 @app.get("/collections", response_class=HTMLResponse)
 async def collections(request: Request) -> HTMLResponse:
+    context = {"request": request}
+    response = templates.TemplateResponse("collections.html", context)
+    return response
+
+@app.get("/stories", response_class=HTMLResponse)
+async def stories(request: Request) -> HTMLResponse:
+    context = {"request": request}
+    response = templates.TemplateResponse("collections.html", context)
+    return response
+
+@app.get("/info", response_class=HTMLResponse)
+async def info(request: Request) -> HTMLResponse:
     context = {"request": request}
     response = templates.TemplateResponse("collections.html", context)
     return response

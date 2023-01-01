@@ -3,5 +3,10 @@
   "python.linting.enabled": true,
   "editor.formatOnSave": true,
   "python.analysis.typeCheckingMode": "off",
-  "cSpell.words": ["fastapi", "starlette", "templating"]
+  "cSpell.words": ["fastapi", "starlette", "templating"],
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }
