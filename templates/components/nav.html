@@ -1,35 +1,24 @@
 {% macro nav_link(name) -%}
-  <a class="{% if request.url.path == '/' + name %}active{% endif %} flex h-8 items-center"
-     href="/{{ name }}">
-    <div class="bullet h-full w-0">
+  {% set current_page = request.url.path == '/' + name -%}
+  <a class="flex h-8 items-center" href="/{{ name }}">
+    <div _="{%- if current_page -%}on load add .opacity-100{%- endif -%}" class="bullet h-full transition-opacity ease-in duration-300 opacity-0 {% if current_page %}w-3{% else %}w-0{% endif %}">
       <svg class="w-full h-full" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="40" fill="black" />
       </svg>
     </div>
-    <p class="label transition-colors duration-300 hover:text-sand-hover">{{ _(name)}}</p>
+    <p _="{%- if current_page -%}on load add .translate-x-6{%- endif -%}" class="label transition-all duration-300 ease-out transform {% if current_page %}font-black text-black {% else %} hover:text-sand-hover {% endif %}">
+      {{ _(name)}}
+    </p>
   </a>
 {%- endmacro %}
 <div class="pl-16">
   <nav class="flex flex-col font-body text-sm font-medium tracking-wide uppercase space-y-6">
     <a class="h-24" href="/">{% include "components/logo.html" %}</a>
-    {{ nav_link("collections") }}
-    {{ nav_link("products") }}
-    {{ nav_link("stories") }}
-    {{ nav_link("info") }}
+    <div class="pt-12 space-y-6">
+      {{ nav_link("collections") }}
+      {{ nav_link("products") }}
+      {{ nav_link("stories") }}
+      {{ nav_link("info") }}
+    </div>
   </nav>
 </div>
-{% block style %}
-  <style scoped>
-    .active .bullet {
-      width: 0.75rem;
-      fill: black;
-      margin-right: 1.5rem;
-      --transform-scale-x: 1;
-      --transform-scale-y: 1;
-    }
-    .active .label {
-      font-weight: 900;
-      color: black;
-    }
-  </style>
-{% endblock style %}

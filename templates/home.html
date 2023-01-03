@@ -3,10 +3,17 @@
     Dalma Jedlicska Leather
 {% endblock title %}
 {% block content %}
-    <div class="bg-slate-500 relative flex w-full max-h-screen pt-48 pb-20">
+    <div class="relative flex w-full max-h-screen pt-48 pb-20">
         <div class="absolute text-sm bottom-0 left-0 rotate-[-90deg] h-16 -ml-16 mb-20 whitespace-nowrap w-16 flex-shrink-0 font-body font-extrabold tracking-extra-wide">
             handcrafted in budapest
         </div>
-        <div class="bg-red-200 w-full h-full"></div>
+        <div class="flex flex-row h-full overflow-hidden">
+            <img src="{{ url_for('static', path='/images/jedlicska_dalma_collection -3.webp')}}"
+                 class="h-full w-auto pr-12"
+                 alt=""/>
+            <img src="{{ url_for('static', path='/images/jedlicska_dalma_collection -140.webp')}}"
+                 class="h-full w-auto pr-12"
+                 alt=""/>
+        </div>
     </div>
 {% endblock content %}

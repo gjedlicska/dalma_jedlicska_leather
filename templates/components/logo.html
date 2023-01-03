@@ -7,7 +7,8 @@
      xml:space="preserve"
      class="h-full">
   <g>
-  <circle class="circle {{ 'fill-black' if logo_active else 'fill-transparent' }}" cx="8.56" cy="8.77" r="8.36" />
+  <circle _="{%- if logo_active -%}on load add .opacity-100{%- endif -%}"
+  class="fill-black transition-opacity duration-500 ease-in opacity-0 " cx="8.56" cy="8.77" r="8.36" />
   <g>
   <path
   d="M55.95,103.86c-18.21,0-33.03-14.82-33.03-33.03V54.02h11v16.81c0,12.15,9.88,22.03,22.03,22.03
