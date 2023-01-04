@@ -7,13 +7,62 @@
         <div class="absolute text-sm bottom-0 left-0 rotate-[-90deg] h-16 -ml-16 mb-20 whitespace-nowrap w-16 flex-shrink-0 font-body font-extrabold tracking-extra-wide">
             handcrafted in budapest
         </div>
-        <div class="flex flex-row h-full overflow-hidden">
-            <img src="{{ url_for('static', path='/images/jedlicska_dalma_collection -3.webp')}}"
-                 class="h-full w-auto pr-12"
-                 alt=""/>
-            <img src="{{ url_for('static', path='/images/jedlicska_dalma_collection -140.webp')}}"
-                 class="h-full w-auto pr-12"
-                 alt=""/>
+        <div _=" init set $current to 0 then repeat forever wait 4s move_right() end"
+             id="slider_parent"
+             class="flex flex-row h-full w-full relative ">
+            <script type="text/hyperscript">
+                def move_left()
+                    if $current is 0
+                        set $current to #slider_images.children.length - 1
+                    else
+                        decrement $current
+                    end
+                    move_to_current()
+                end
+                def move_right()
+                    if $current + 1 == #slider_images.children.length
+                        set $current to 0
+                    else
+                        increment $current
+                    end
+                    move_to_current()
+                end
+                def move_to_current()
+                    set current_id to #slider_images.children[$current].id
+                    go to the left of #{current_id} smoothly
+                end
+            </script>
+            <div class="absolute flex justify-between left-0 top-1/2 w-full h-6">
+                <button _="on click move_left()" class="bg-white bg-opacity-50">LEFT</button>
+                <button _="on click move_right()" class="bg-white bg-opacity-50">RIGHT</button>
+            </div>
+            <div id="slider_images"
+                 class="flex flex-row h-full overflow-scroll scroll-smooth scrollbar-hide">
+                <img id="img_1"
+                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -3.webp')}}"
+                     class="h-full w-auto transition-transform pr-12"
+                     alt=""/>
+                <img id="img_2"
+                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -138.webp')}}"
+                     class="h-full w-auto pr-12"
+                     alt=""/>
+                <img id="img_3"
+                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -140.webp')}}"
+                     class="h-full w-auto pr-96"
+                     alt=""/>
+            </div>
         </div>
+        <style>
+            /* For Webkit-based browsers (Chrome, Safari and Opera) */
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* For IE, Edge and Firefox */
+            .scrollbar-hide {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+        </style>
     </div>
 {% endblock content %}
