@@ -38,18 +38,12 @@
             </div>
             <div id="slider_images"
                  class="flex flex-row h-full overflow-scroll scroll-smooth scrollbar-hide">
-                <img id="img_1"
-                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -3.webp')}}"
-                     class="h-full w-auto transition-transform pr-12"
-                     alt=""/>
-                <img id="img_2"
-                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -138.webp')}}"
-                     class="h-full w-auto pr-12"
-                     alt=""/>
-                <img id="img_3"
-                     src="{{ url_for('static', path='/images/jedlicska_dalma_collection -140.webp')}}"
-                     class="h-full w-auto pr-96"
-                     alt=""/>
+                {% for image in slideshow_images %}
+                    <img id="{{ 'img_{}'.format(loop.index) }}"
+                         class="h-full object-cover pr-12"
+                         src="{{ url_for('static', path=image.source) }}"
+                         alt="{{ image.description }}"/>
+                {% endfor %}
             </div>
         </div>
         <style>

@@ -4,13 +4,14 @@ version = "0.1.0"
 description = ""
 authors = ["Gergő Jedlicska <gergo@jedlicska.com>"]
 readme = "README.md"
-packages = [{ include = "src/dalma_jedlicska_leather" }]
+packages = [{ include = "dalma_jedlicska_leather", from = "src" }]
 
 
 [tool.poetry.dependencies]
 python = "^3.10"
 babel = "^2.11.0"
 starlette-babel = "^0.2.2"
+attrs = "^22.2.0"
 
 
 [tool.poetry.group.dev.dependencies]

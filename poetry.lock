@@ -25,7 +25,7 @@ trio = ["trio (>=0.16,<0.22)"]
 name = "attrs"
 version = "22.2.0"
 description = "Classes Without Boilerplate"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1458,4 +1458,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8b94ec01c759e247e7b0ee2af81d790b985b371598b0fbdba9ea265eac548f03"
+content-hash = "7d0e20678e5a86a71df29aa1e8696c30d453a15c3bef851ad6b0f26e70ea6541"
