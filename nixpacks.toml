@@ -1,0 +1,7 @@
+providers = ["...", "python"]
+
+[start]
+cmd = "./start"
+
+[phases.setup]
+nixPkgs = ["...", "poetry"] 
