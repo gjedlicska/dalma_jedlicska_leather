@@ -4,4 +4,7 @@ providers = ["...", "python"]
 cmd = "./start"
 
 [phases.setup]
-nixPkgs = ["...", "poetry"] 
+nixPkgs = ["...", "poetry"]
+
+[phase.name]
+nixpkgsArchive = "4d2b37a84fad1091b9de401eb450aae66f1a741e"
