@@ -1,10 +1,6 @@
-providers = ["...", "python"]
+[phases.build]
+cmds = ["...", "make pybabel-compile"]
+
 
 [start]
 cmd = "./start"
-
-[phases.setup]
-nixPkgs = ["...", "poetry"]
-
-[phase.name]
-nixpkgsArchive = "4d2b37a84fad1091b9de401eb450aae66f1a741e"
