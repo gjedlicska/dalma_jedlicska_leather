@@ -4,8 +4,6 @@
         <meta charset="UTF-8"/>
         <meta name="description" content="Dalma Jedlicska Leather"/>
         <meta name="keywords" content="Dalma Jedlicska Leather"/>
-        <!-- <meta http-equiv="Content-Security-Policy"
-       content="upgrade-insecure-requests"/> -->
         <title>
             {% block title %}
             {% endblock title %}
@@ -28,7 +26,8 @@
         <div class="flex pl-16">
             <div class="pt-16 flex flex-col fixed top-0 h-full">
                 {% include "components/nav.html" %}
-                <div class="absolute bottom-0 left-0 h-20">
+                <div class="absolute bottom-0 left-0 h-20 mb-6">
+                    {% include "components/lang_selector.html" %}
                     <div class="flex space-x-4 h-12 items-end">
                         <div class="h-8 w-8">
                             <a href="https://www.instagram.com/dalma_jedlicska_leather/">{% include "components/instagram_icon.html" %}</a>

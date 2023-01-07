@@ -1,0 +1,8 @@
+<select _="on change go to url `/set_lang/?lang=${my.value}`">
+  {% for lang in supported_locales %}
+    <option value="{{ lang }}"
+            {% if request.cookies.get("language", None) == lang %}selected=true{% endif %}>
+      {{ lang.upper()}}
+    </option>
+  {% endfor %}
+</select>
