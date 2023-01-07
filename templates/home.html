@@ -41,7 +41,7 @@
                 {% for image in slideshow_images %}
                     <img id="{{ 'img_{}'.format(loop.index) }}"
                          class="h-full object-cover pr-12"
-                         src="{{ url_for('static', path=image.source) }}"
+                         src="{{ '/static/{}'.format(image.source) }}"
                          alt="{{ image.description }}"/>
                 {% endfor %}
             </div>
