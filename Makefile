@@ -9,3 +9,9 @@ pybabel-update:
 
 pybabel-compile:
 	pybabel compile -d locales
+
+css-compile:
+	cd tailwindcss && tailwindcss -i input.css -o ../static/css/style.css --minify
+
+compile:
+	make pybabel-compile && make css-compile

@@ -1,5 +1,8 @@
+[phases.setup]
+nixPkgs = ["...", "nodePackages.tailwindcss"]
+
 [phases.build]
-cmds = ["...", "make pybabel-compile"]
+cmds = ["...", "make compile"]
 
 
 [start]
