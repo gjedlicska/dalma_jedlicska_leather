@@ -6,5 +6,7 @@ set -o nounset
 
 
 echo ${PATH}
-# /opt/venv/bin/activate
+source /opt/venv/bin/activate
+echo ${PATH}
+which python
 uvicorn app.main:app --port ${PORT} --host 0.0.0.0 --proxy-headers
