@@ -35,7 +35,6 @@ app.add_middleware(GZipMiddleware)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request) -> HTMLResponse:
-    print(request.headers)
     slideshow_images = services.get_slideshow_images()
     context = {
         "request": request,
