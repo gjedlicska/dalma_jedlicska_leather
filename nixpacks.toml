@@ -8,4 +8,4 @@ cmds = ["...", "make compile"]
 [start]
 runImage = 'python:3.11-slim-bullseye'
 onlyIncludeFiles = ['./', '/opt/venv']
-cmd = "./start"
+cmd = "/opt/venv/bin/activate && ./start"
