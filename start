@@ -5,4 +5,5 @@ set -o pipefail
 set -o nounset
 
 
+/opt/venv/bin/activate
 uvicorn app.main:app --port ${PORT} --host 0.0.0.0 --proxy-headers
