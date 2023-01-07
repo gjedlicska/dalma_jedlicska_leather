@@ -6,4 +6,6 @@ cmds = ["...", "make compile"]
 
 
 [start]
+runImage = '3.11-slim-bullseye'
+onlyIncludeFiles = ['./', '/opt/venv']
 cmd = "./start"
