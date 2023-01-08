@@ -1,11 +1,17 @@
 [phases.setup]
-nixPkgs = ["...", "nodePackages.tailwindcss"]
+nixPkgs = ["..."]
+
 
 [phases.build]
-cmds = ["...", "make compile"]
+cmds = [
+  "...",
+  "curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.2.4/tailwindcss-linux-x64",
+  "chmod +x tailwindcss-linux-x64",
+  "mv tailwindcss-linux-x64 ~/.local/bin/tailwindcss",
+  "echo ${PATH}",
+  "make compile",
+]
 
 
 [start]
-runImage = 'python:3.11-slim-bullseye'
-onlyIncludeFiles = ['./', '/opt/venv']
 cmd = "./start"
