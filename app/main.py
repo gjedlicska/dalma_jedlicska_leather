@@ -85,5 +85,3 @@ async def set_language(request: Request, lang: str) -> RedirectResponse:
     response = RedirectResponse(url=referer)
     response.set_cookie("language", lang)
     return response
-
-print(app.middleware_stack)
