@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+    Dalma's info
+{% endblock title %}
+{% block content %}
+    <div class="flex flex-col w-full h-screen items-center pt-64 font-body text-sm uppercase space-y-8">
+        <h1>{{ _("page_not_found") }}</h1>
+        <nav class="hover:text-sand-hover transition-colors duration-300">
+            <a href="/">{{ _("back_to_home") }}</a>
+        </nav>
+    </div>
+{% endblock content %}

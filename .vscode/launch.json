@@ -20,7 +20,10 @@
       "module": "uvicorn",
       "args": ["app.main:app", "--reload"],
       "jinja": true,
-      "justMyCode": false
+      "justMyCode": true,
+      "env": {
+        "DEBUG": "true"
+      }
     }
   ]
 }

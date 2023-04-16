@@ -14,22 +14,25 @@
                 crossorigin="anonymous"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
         {% block style %}
-            <link rel="stylesheet"
-                  href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"/>
-            <link rel="stylesheet"
-                  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+            <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
+                  rel="stylesheet"/>
+            <!-- <link rel="stylesheet"
+       href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"/> -->
+            <!-- <link rel="stylesheet"
+       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"/> -->
             <link href="/static/css/style.css" rel="stylesheet" />
             <link href="/static/favicon.png" rel="shortcut icon" />
         {% endblock style %}
     </head>
     <body>
-        <div class="flex pl-16">
-            <div class="pt-16 flex flex-col fixed top-0 h-full">
-                {% include "components/nav.html" %}
-                <div class="absolute bottom-0 left-0 h-20 mb-6">
-                    {% include "components/lang_selector.html" %}
-                    <div class="flex space-x-4 h-12 items-end">
-                        <div class="h-8 w-8">
+        {% if DEBUG %}{{ hot_reload.script(url_for('hot-reload')) | safe }}{% endif %}
+        <div class="{% if full_height %}h-screen{% endif %} flex flex-col">
+            {% include "components/nav.html" %}
+            <!-- <div class="absolute bottom-0 left-0 h-20 mb-6"> -->
+            <!-- <div class="flex space-x-4 h-12 items-end"> -->
+            <!-- <div class="h-8 w-8">
                             <a href="https://www.instagram.com/dalma_jedlicska_leather/">{% include "components/instagram_icon.html" %}</a>
                         </div>
                         <div class="h-8 w-8">
@@ -38,13 +41,14 @@
                         <div class="flex-row font-body leading-snug tracking-wider font-medium">
                             <p>Dalma</p>
                             <p>Jedlicska</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ml-23 min-h-screen flex-shrink-0 w-4 bg-sand-dark"></div>
+                        </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="ml-23 min-h-screen flex-shrink-0 w-4 bg-sand-dark"></div> -->
             {% block content %}
             {% endblock content %}
+            {% include "components/footer.html" %}
         </div>
-    </body>
+    </div>
+</body>
 </html>

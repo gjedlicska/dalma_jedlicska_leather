@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-26 17:51+0100\n"
+"POT-Creation-Date: 2023-01-13 18:29+0100\n"
 "PO-Revision-Date: 2022-12-26 17:25+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,19 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: templates/components/nav.html:16
+#: templates/404.html:7
+msgid "page_not_found"
+msgstr "page not found"
+
+#: templates/404.html:9
+msgid "back_to_home"
+msgstr "back to home"
+
+#: templates/components/nav.html:19
 msgid "collections"
 msgstr "collections"
 
-#: templates/components/nav.html:19
+#: templates/components/nav.html:20
 msgid "products"
 msgstr "products"
 
-#: templates/components/nav.html:20
+#: templates/components/nav.html:21
 msgid "stories"
 msgstr "stories"
 
-#: templates/components/nav.html:21
+#: templates/components/nav.html:22
 msgid "info"
 msgstr "info"
 

@@ -2,3 +2,32 @@
 {% block title %}
     Dalma's products
 {% endblock title %}
+{% block content %}
+    <div class="w-full grid grid-cols-3 gap-x-20 gap-y-24 py-44 px-28">
+        {% for product in products %}
+            <a href="/products/{{ product.id }}"
+               id="{{ product.id }}"
+               class="group flex flex-col">
+                <div class="relative aspect-[1/1.5] transition-shadow duration-500 group-hover:shadow-md">
+                    <img class="absolute h-full w-full object-cover transition-shadow "
+                         alt="{{ product.image.description }}"
+                         src="{{ product.image.source }}"/>
+                    <div class="absolute h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100"/>
+                </div>
+            </div>
+            <div class="pt-8 group-hover:text-sand-hover transition-colors ease-in duration-300">
+                <div class="flex flex-wrap font-body uppercase text-lg pb-5">
+                    <div class="flex-grow font-extrabold tracking-wide mb-1">{{ product.model.category }}</div>
+                    <div class="flex flex-col tracking-wider">{{ product.price }}</div>
+                </div>
+                <div class="flex-grow font-body text-sm">{{ product.material_description }}</div>
+                <div class="opacity-0 group-hover:opacity-100 ease-in transition-opacity duration-500 h-3 mt-8 text-sand-hover">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="40" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}

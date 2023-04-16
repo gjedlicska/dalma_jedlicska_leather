@@ -1,15 +1,33 @@
 {% extends "base.html" %}
+{% set full_height = true %}
 {% block title %}
     Dalma Jedlicska Leather
 {% endblock title %}
 {% block content %}
-    <div class="relative flex w-full max-h-screen pt-48 pb-20">
-        <div class="absolute text-sm bottom-0 left-0 rotate-[-90deg] h-16 -ml-16 mb-20 whitespace-nowrap w-16 flex-shrink-0 font-body font-extrabold tracking-extra-wide">
-            handcrafted in budapest
-        </div>
-        <div _="on start(delay) cycle_right(delay) init set $current to 0 then trigger start(delay: 5s)"
-             id="slider_parent"
-             class="flex flex-row h-full w-full relative ">
+    {{ super()}}
+    <!-- <div class="w-full overflow-x-scroll h-1 scroll-smooth scrollbar-hide flex items-center space-x-10 flex-grow"> -->
+    <div class="w-full overflow-x-scroll h-1 scroll-smooth scrollbar-hide flex items-center -space-x-14 flex-grow">
+        <!-- <img class="h-full"
+      src="/static/images/jedlicska_dalma_film_look_brown-59.webp"/> -->
+        <!-- <div id="slider_images"
+      class="bg-red-200 slider_images flex h-full flex-row overflow-x-scroll scroll-smooth scrollbar-hide"> -->
+        <!-- {% for image in slideshow_images %}
+            <div style="height: {{ image.height_percent }}%; z-index: {{ image.z_index }}" class="aspected bg-red-300 w-20 z-50">
+                asdfasdfsdf
+            </div>
+        {% endfor %} -->
+        {% for image in slideshow_images %}
+            <img id="{{ 'img_{}'.format(loop.index) }}"
+                 style="height: {{ image.height_percent }}%;
+                        z-index: {{ image.z_index }}"
+                 class="object-contain"
+                 src="{{ image.source }}"
+                 alt="{{ image.description }}"/>
+        {% endfor %}
+        <!-- </div> -->
+    </div>
+    <!-- <div class="flex w-full">
+        <div _="on start(delay) cycle_right(delay) init set $current to 0" id="slider_parent" class="flex flex-row h-full w-full relative ">
             <script type="text/hyperscript">
                 def cycle_right(delay)
                     wait delay
@@ -38,38 +56,38 @@
                     set current_id to #slider_images.children[$current].id
                     go to the left of #{current_id} smoothly
                 end
-            </script>
-            <div class="absolute flex justify-between left-0 top-1/2 w-full h-6">
-                <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"
-                        class="bg-white bg-opacity-50">
+            </script> -->
+<!-- <div class="absolute flex justify-between left-0 top-1/2 w-full h-6">
+                <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent" class="bg-white bg-opacity-50">
                     LEFT
                 </button>
-                <button _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"
-                        class="bg-white bg-opacity-50">
+                <button _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent" class="bg-white bg-opacity-50">
                     RIGHT
                 </button>
-            </div>
-            <div id="slider_images"
-                 class="flex flex-row h-full overflow-scroll scroll-smooth scrollbar-hide">
+            </div> -->
+<!-- <div id="slider_images" class="flex flex-row h-full overflow-scroll scroll-smooth scrollbar-hide">
                 {% for image in slideshow_images %}
-                    <img id="{{ 'img_{}'.format(loop.index) }}"
-                         class="h-full object-cover pr-12"
-                         src="{{ '/static/{}'.format(image.source) }}"
-                         alt="{{ image.description }}"/>
+                    <img id="{{ 'img_{}'.format(loop.index) }}" class="h-full object-cover pr-12" src="{{ image.source }}" alt="{{ image.description }}"/>
                 {% endfor %}
             </div>
-        </div>
-        <style>
-            /* For Webkit-based browsers (Chrome, Safari and Opera) */
-            .scrollbar-hide::-webkit-scrollbar {
-                display: none;
-            }
+        </div> -->
+<style>
+.aspected {
 
-            /* For IE, Edge and Firefox */
-            .scrollbar-hide {
-                -ms-overflow-style: none;  /* IE and Edge */
-                scrollbar-width: none;  /* Firefox */
-            }
-        </style>
-    </div>
+    aspect-ratio: 16 / 16;
+}
+img {
+    height: 100%;
+}
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+</style>
 {% endblock content %}

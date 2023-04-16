@@ -1,24 +1,29 @@
-{% macro nav_link(name) -%}
-  {% set current_page = request.url.path == '/' + name -%}
-  <a class="flex h-8 items-center" href="/{{ name }}">
-    <div _="{%- if current_page -%}on load add .opacity-100 remove .opacity-0{%- endif -%}" class="bullet h-full transition-opacity ease-in duration-300 opacity-0 {% if current_page %}w-3{% else %}w-0{% endif %}">
-      <svg class="w-full h-full" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="40" fill="black" />
+{% macro nav_link(target, display) -%}
+  {% set current_page = request.url.path == '/' + target -%}
+  <div class="h-3 group ">
+    <a href="/{{ target }}">{{ display }}</a>
+    <div class="w-full {% if current_page %}opacity-100{% else %}opacity-0{% endif %} group-hover:opacity-100 transition-opacity duration-200 flex justify-center">
+      <svg class="h-2" viewBox="0 0 10 10">
+        <circle cx="5" cy="5" r="2" fill="black" />
       </svg>
     </div>
-    <p _="{%- if current_page -%}on load add .translate-x-6{%- endif -%}" class="label transition-all duration-300 ease-out transform {% if current_page %}font-black text-black {% else %} hover:text-sand-hover {% endif %}">
-      {{ _(name)}}
-    </p>
-  </a>
-{%- endmacro %}
-<div class="pl-16">
-  <nav class="flex flex-col font-body text-sm font-medium tracking-wide uppercase space-y-6">
-    <a class="h-24" href="/">{% include "components/logo.html" %}</a>
-    <div class="pt-12 space-y-6">
-      {{ nav_link("collections") }}
-      {{ nav_link("products") }}
-      {{ nav_link("stories") }}
-      {{ nav_link("info") }}
+  </div>
+  <!-- <a class="flex h-8 items-center" href="/{{ target }}">
+    <div _="{%- if current_page -%}on load add .opacity-100 remove .opacity-0{%- endif -%}" class="bullet h-full transition-opacity ease-in duration-300 opacity-0 {% if current_page %}w-3{% else %}w-0{% endif %}">
     </div>
-  </nav>
-</div>
+    <p _="{%- if current_page -%}on load add .translate-x-6{%- endif -%}" class="label transition-all duration-300 ease-out transform {% if current_page %}font-black text-black {% else %} hover:text-sand-hover {% endif %}">
+      {{ display }}
+    </p>
+  </a>-->
+{%- endmacro %}
+<nav class="flex h-40 font-body text-nav tracking-widest uppercase">
+  <div class="w-1/6 flex items-center justify-center ">
+    <a class="h-14" href="/">{% include "components/logo.html" %}</a>
+  </div>
+  <div class="flex items-center space-x-18 flex-grow">
+    {{ nav_link("products", _("products")) }}
+    {{ nav_link("stories", _("stories")) }}
+    {{ nav_link("info", _("info")) }}
+  </div>
+  <div class="w-1/6 flex items-center justify-center">{% include "components/lang_selector.html" %}</div>
+</nav>

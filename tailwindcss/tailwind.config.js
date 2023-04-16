@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: 'Inter',
+        body: 'Cabin',
         serif: 'Playfair',
       },
       colors: {
@@ -15,12 +15,18 @@ module.exports = {
         },
       },
       spacing: {
-        23: '24%',
+        18: '4.5rem',
+        30: '7.5rem',
+        '1/3': '33.333333%',
+        '3/2': '150%',
       },
       letterSpacing: {
-        wide: '.25rem',
-        widest: '.3333rem',
+        // wide: '.25rem',
+        widest: '.09rem',
         'extra-wide': '.45rem',
+      },
+      fontSize: {
+        nav: '0.6875rem',
       },
     },
   },

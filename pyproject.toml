@@ -4,7 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Gergő Jedlicska <gergo@jedlicska.com>"]
 readme = "README.md"
-packages = [{ include = "dalma_jedlicska_leather", from = "src" }]
+packages = [
+  { include = "dalma_jedlicska_leather", from = "src" },
+  { include = "app" },
+]
 
 
 [tool.poetry.dependencies]
@@ -16,6 +19,7 @@ fastapi = { extras = ["all"], version = "^0.88.0" }
 uvicorn = { extras = ["standard"], version = "^0.20.0" }
 jinja2 = "^3.1.2"
 gunicorn = "^20.1.0"
+arel = "^0.2.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^0.991"
@@ -25,12 +29,15 @@ djlint = "^1.19.10"
 httpx = "^0.23.1"
 pytest = "^7.2.0"
 pytest-pretty = "^0.0.1"
+debugpy = "^1.6.6"
+ruff-lsp = "^0.0.23"
 
 [tool.isort]
 profile = "black"
 
 [tool.djlint]
 profile = "jinja"
+ignore = "J018"
 
 [build-system]
 requires = ["poetry-core"]
