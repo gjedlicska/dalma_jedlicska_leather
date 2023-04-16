@@ -18,12 +18,15 @@ module.exports = {
         18: '4.5rem',
         30: '7.5rem',
         '1/3': '33.333333%',
+        '1/6': '16.666667%',
         '3/2': '150%',
       },
       letterSpacing: {
         // wide: '.25rem',
         widest: '.09rem',
+        'very-wide': '.2rem',
         'extra-wide': '.45rem',
+        'ultra-wide': '.9rem',
       },
       fontSize: {
         nav: '0.6875rem',

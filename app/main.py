@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import cast
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -17,7 +17,7 @@ import os
 
 root_dir = Path(__file__).parent.parent
 
-supported_locales = ["en", "hu"]
+supported_locales = [locale.value for locale in services.Locale]
 shared_translator = get_translator()  # process global instance
 shared_translator.load_from_directories(
     [root_dir.joinpath("locales")]
@@ -81,8 +81,19 @@ async def collections_page(request: Request) -> HTMLResponse:
 
 @app.get("/stories", response_class=HTMLResponse)
 async def stories_page(request: Request) -> HTMLResponse:
-    context = {"request": request} | global_context
+    stories = await services.get_stories()
+    context = {"request": request, "stories": stories} | global_context
     response = cast(HTMLResponse, templates.TemplateResponse("stories.html", context))
+    return response
+
+
+@app.get("/stories/{story_id}")
+async def story_page(story_id: str, request: Request) -> HTMLResponse:
+    story = await services.get_story(story_id)
+    if not story:
+        raise HTTPException(status_code=404, detail="Item not found")
+    context = {"request": request, "story": story} | global_context
+    response = cast(HTMLResponse, templates.TemplateResponse("story.html", context))
     return response
 
 
