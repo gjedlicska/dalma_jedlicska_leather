@@ -20,12 +20,6 @@
         </div>
       {% endfor %}
     </div>
-    <button _="on click go to the top of the body smoothly"
-            class="flex flex-col items-center space-y-3">
-      <p class="font-body uppercase text-sm tracking-widest">back to top</p>
-      <svg class="h-2 " viewBox="0 0 10 10">
-        <circle cx="5" cy="5" r="3" class="fill-black" />
-      </svg>
-    </button>
+    {% include "components/go_top.html" %}
   </div>
 {% endblock content %}
