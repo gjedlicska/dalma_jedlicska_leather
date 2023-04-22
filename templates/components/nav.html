@@ -1,6 +1,7 @@
 {% macro nav_link(target, display) -%}
   {% set current_page = request.url.path == '/' + target -%}
-  <div class="h-3 group ">
+  <div _="on mouseenter show #cloud then transition #cloud's opacity to 0.4 on mouseleave transition #cloud's opacity to 0"
+       class="h-4 group ">
     <a href="/{{ target }}">{{ display }}</a>
     <div class="w-full {% if current_page %}opacity-100{% else %}opacity-0{% endif %} group-hover:opacity-100 transition-opacity duration-200 flex justify-center">
       <svg class="h-2" viewBox="0 0 10 10">
@@ -16,6 +17,8 @@
     </p>
   </a>-->
 {%- endmacro %}
+<div id="cloud"
+     class="bg-white pointer-events-none absolute top-0 left-0 w-screen h-screen z-10 opacity-0"></div>
 <nav class="sticky top-0 z-10 bg-white flex h-40 font-body text-nav tracking-widest uppercase">
   <div class="w-1/6 flex items-center justify-center ">
     <a class="h-14" href="/">{% include "components/logo.html" %}</a>

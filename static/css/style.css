@@ -513,6 +513,10 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .absolute {
   position: absolute;
 }
@@ -549,8 +553,16 @@ video {
   z-index: 10;
 }
 
+.z-20 {
+  z-index: 20;
+}
+
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+
+.m-3 {
+  margin: 0.75rem;
 }
 
 .mx-1\/6 {
@@ -561,31 +573,6 @@ video {
 .mx-22 {
   margin-left: 5.5rem;
   margin-right: 5.5rem;
-}
-
-.mx-40 {
-  margin-left: 10rem;
-  margin-right: 10rem;
-}
-
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-
-.mx-56 {
-  margin-left: 14rem;
-  margin-right: 14rem;
-}
-
-.mx-6 {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-}
-
-.mx-64 {
-  margin-left: 16rem;
-  margin-right: 16rem;
 }
 
 .mx-60 {
@@ -677,6 +664,10 @@ video {
   height: 3.5rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -711,6 +702,10 @@ video {
 
 .w-0 {
   width: 0px;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .flex-shrink-0 {
@@ -774,10 +769,6 @@ video {
   justify-content: space-between;
 }
 
-.gap-4 {
-  gap: 1rem;
-}
-
 .gap-y-40 {
   row-gap: 10rem;
 }
@@ -803,6 +794,10 @@ video {
 
 .gap-y-10 {
   row-gap: 2.5rem;
+}
+
+.gap-y-20 {
+  row-gap: 5rem;
 }
 
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
@@ -938,6 +933,10 @@ video {
      object-fit: cover;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .py-44 {
   padding-top: 11rem;
   padding-bottom: 11rem;
@@ -946,6 +945,11 @@ video {
 .px-28 {
   padding-left: 7rem;
   padding-right: 7rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .pt-64 {
@@ -960,8 +964,8 @@ video {
   padding-top: 6rem;
 }
 
-.pb-10 {
-  padding-bottom: 2.5rem;
+.pb-30 {
+  padding-bottom: 7.5rem;
 }
 
 .pt-8 {
@@ -976,20 +980,16 @@ video {
   padding-top: 1.25rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-11 {
   padding-bottom: 2.75rem;
 }
 
 .pl-4 {
   padding-left: 1rem;
-}
-
-.pb-24 {
-  padding-bottom: 6rem;
-}
-
-.pb-30 {
-  padding-bottom: 7.5rem;
 }
 
 .font-body {
@@ -1081,6 +1081,10 @@ video {
   opacity: 1;
 }
 
+.opacity-40 {
+  opacity: 0.4;
+}
+
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1165,6 +1169,10 @@ video {
 
 .group:hover .group-hover\:opacity-0 {
   opacity: 0;
+}
+
+.group:hover .group-hover\:opacity-40 {
+  opacity: 0.4;
 }
 
 .group:hover .group-hover\:shadow-md {

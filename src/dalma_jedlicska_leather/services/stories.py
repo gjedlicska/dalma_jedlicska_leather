@@ -32,9 +32,17 @@ stories = [
         ImageData("/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown"),
         [
             StoryImage(
-                "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
+                "/static/images/jedlicska_dalma_film_look_porcelain-51.webp",
                 "porcelain",
                 True,
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-21.webp",
+                "porcelain",
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-34.webp",
+                "porcelain",
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown", True

@@ -18,7 +18,7 @@
         {% endfor %} -->
         {% for image in slideshow_images %}
             <img id="{{ 'img_{}'.format(loop.index) }}"
-                 style="height: {{ image.height_percent }}%;
+                 style="height: {{ image.height_sixth / 6 * 100 }}%;
                         z-index: {{ image.z_index }}"
                  class="object-contain"
                  src="{{ image.source }}"

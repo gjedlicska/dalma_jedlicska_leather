@@ -1,0 +1,5 @@
+{% macro fade_image(source, description) -%}
+  <img _="on intersection(intersecting) having threshold 0.2 if intersecting transition opacity to 1 else transition opacity to 0 "
+       src="{{ source }}"
+       alt="{{ description }}">
+{%- endmacro %}

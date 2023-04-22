@@ -2,6 +2,7 @@
 {% block title %}
   Dalma's info
 {% endblock title %}
+{% from 'components/fade_image.html' import fade_image %}
 {% macro block_content(header, paragraph) -%}
   <h2 class="font-body text-lg uppercase tracking-ultra-wide">{{ header }}</h2>
   <p class="font-body text-base uppercase">{{ paragraph }}</p>
@@ -16,8 +17,7 @@
     </div>
     <div class="grid grid-cols-2 gap-y-40 gap-x-7">
       <div class="col-span-2">
-        <img src="/static/images/jedlicska_dalma_leather_behind_the_scenes-63.webp"
-             alt="kalapacs">
+        {{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-63.webp", "kalapacs")}}
       </div>
       <div class="mx-22 space-y-14 flex flex-col justify-center">
         {% set paragraph = 'EM RERUPTIS DIGENDI BEAT.
@@ -35,17 +35,9 @@
         <!-- <h2 class="font-body text-lg uppercase tracking-ultra-wide">about me</h2>
         <p class="font-body text-base uppercase"></p> -->
       </div>
-      <div>
-        <img src="/static/images/dalma-jedlicska-leather-7.webp" alt="dalmacs">
-      </div>
-      <div>
-        <img src="/static/images/jedlicska_dalma_leather_behind_the_scenes-35.webp"
-             alt="hammer">
-      </div>
-      <div>
-        <img src="/static/images/jedlicska_dalma_leather_behind_the_scenes-4.webp"
-             alt="punch">
-      </div>
+      <div>{{ fade_image("/static/images/dalma-jedlicska-leather-7.webp", "dalmacs")}}</div>
+      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-35.webp", "hammer")}}</div>
+      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-4.webp", "punch")}}</div>
       <div class="col-span-2 mx-60 space-y-14 flex flex-col justify-start">
         {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS EUM FUGIATUR REMPORE VOLESCIIS DU-
         CILIS VEL INIMOLORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOLORITIA SAM, ULLACEA-
@@ -58,10 +50,7 @@
         RIBUS ENIHICTE CONSEQUE SED UT ERIT RE CULLABO. UT A QUE INT, IPSUSAPITAE ETUR ASSI.' %}
         {{ block_content('atelier', paragraph)}}
       </div>
-      <div>
-        <img src="/static/images/jedlicska_dalma_leather_behind_the_scenes-10.webp"
-             alt="blade">
-      </div>
+      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-10.webp", "blade")}}</div>
       <div class="mx-22 flex flex-col space-y-14 justify-center">
         {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS
         EUM FUGIATUR REMPORE VOLESCIIS DUCILIS VEL INIMOL-
