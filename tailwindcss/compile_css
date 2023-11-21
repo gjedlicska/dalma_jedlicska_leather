@@ -4,4 +4,6 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-tailwindcss -i input.css -o ../static/css/style.css --watch
+tailwindcss -i input.css -c ../tailwind.config.js -o ../static/css/style.css --watch
+
+
