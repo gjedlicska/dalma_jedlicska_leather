@@ -9,42 +9,25 @@
             {% endblock title %}
         </title>
         <!-- Htmx -->
-        <script src="https://unpkg.com/htmx.org@1.8.4"
-                integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV"
-                crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+
+        <script src="https://unpkg.com/htmx.org@1.9.8"  crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
         {% block style %}
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
             <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
                   rel="stylesheet"/>
-            <!-- <link rel="stylesheet"
-       href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"/> -->
-            <!-- <link rel="stylesheet"
-       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"/> -->
             <link href="/static/css/style.css" rel="stylesheet" />
             <link href="/static/favicon.png" rel="shortcut icon" />
+            <link href="/static/fontawesome/css/fontawesome.css" rel="stylesheet">
+            <link href="/static/fontawesome/css/brands.css" rel="stylesheet">
+            <link href="/static/fontawesome/css/solid.css" rel="stylesheet">
         {% endblock style %}
     </head>
     <body>
         {% if DEBUG %}{{ hot_reload.script(url_for('hot-reload')) | safe }}{% endif %}
         <div class="{% if full_height %}h-screen{% endif %} flex flex-col">
             {% include "components/nav.html" %}
-            <!-- <div class="absolute bottom-0 left-0 h-20 mb-6"> -->
-            <!-- <div class="flex space-x-4 h-12 items-end"> -->
-            <!-- <div class="h-8 w-8">
-                            <a href="https://www.instagram.com/dalma_jedlicska_leather/">{% include "components/instagram_icon.html" %}</a>
-                        </div>
-                        <div class="h-8 w-8">
-                            <a href="https://www.facebook.com/dalmajedlicskaleather">{% include "components/facebook_icon.html" %}</a>
-                        </div>
-                        <div class="flex-row font-body leading-snug tracking-wider font-medium">
-                            <p>Dalma</p>
-                            <p>Jedlicska</p>
-                        </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
-            <!-- <div class="ml-23 min-h-screen flex-shrink-0 w-4 bg-sand-dark"></div> -->
             {% block content %}
             {% endblock content %}
             {% include "components/footer.html" %}
