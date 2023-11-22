@@ -1,69 +1,69 @@
 {% extends "base.html" %}
 {% block title %}
-  Dalma's info
+Dalma's info
 {% endblock title %}
 {% from 'components/fade_image.html' import fade_image %}
 {% macro block_content(header, paragraph) -%}
-  <h2 class="font-body text-lg uppercase tracking-ultra-wide">{{ header }}</h2>
-  <p class="font-body text-base uppercase">{{ paragraph }}</p>
+<h2 class="font-body text-lg uppercase tracking-ultra-wide">{{ header }}</h2>
+<p class="font-body text-base uppercase">{{ paragraph }}</p>
 {%- endmacro %}
 {% block content %}
-  <div class="flex flex-col items-center pt-24 pb-30 space-y-18 mx-1/6">
-    <div class="flex flex-col items-center space-y-9">
-      <h1 class="font-body text-base uppercase tracking-ultra-wide">my philosophy</h1>
-      <svg class="h-2 " viewBox="0 0 10 10">
-        <circle cx="5" cy="5" r="3" class="fill-black" />
-      </svg>
+<div class="flex flex-col items-center pt-24 pb-30 space-y-18 mx-1/6">
+  <div class="flex flex-col items-center space-y-9">
+    <h1 class="font-body text-base uppercase tracking-ultra-wide">my philosophy</h1>
+    <svg class="h-2 " viewBox="0 0 10 10">
+      <circle cx="5" cy="5" r="3" class="fill-black" />
+    </svg>
+  </div>
+  <div class="grid grid-cols-2 gap-y-40 gap-x-7">
+    <div class="col-span-2">
+      {{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-63.webp", "kalapacs") }}
     </div>
-    <div class="grid grid-cols-2 gap-y-40 gap-x-7">
-      <div class="col-span-2">
-        {{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-63.webp", "kalapacs")}}
-      </div>
-      <div class="mx-22 space-y-14 flex flex-col justify-center">
-        {% set paragraph = 'EM RERUPTIS DIGENDI BEAT.
-        POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS
-        EUM FUGIATUR REMPORE VOLESCIIS DUCILIS VEL INIMOL-
-        ORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOL-
-        ORITIA SAM, ULLACEATIA SIT AS SUM, SIMET QUUNTIA AUT
-        HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLO-
-        RE PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB
-        IMAGNIT AQUAM, SA SI APERIO. IGNI OPTATIAS IPSA DOL-
-        ORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBI-
-        TATUR, IPID UT AS ANT LA SOLOR RE, QUAM EUM QUIBU-
-        SA PREHENDUS CON NONECUPTATUS RECATUM SIMOLOR' %}
-        {{ block_content('about me', paragraph)}}
-        <!-- <h2 class="font-body text-lg uppercase tracking-ultra-wide">about me</h2>
+    <div class="mx-22 space-y-14 flex flex-col justify-center">
+      {% set paragraph = 'EM RERUPTIS DIGENDI BEAT.
+      POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS
+      EUM FUGIATUR REMPORE VOLESCIIS DUCILIS VEL INIMOL-
+      ORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOL-
+      ORITIA SAM, ULLACEATIA SIT AS SUM, SIMET QUUNTIA AUT
+      HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLO-
+      RE PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB
+      IMAGNIT AQUAM, SA SI APERIO. IGNI OPTATIAS IPSA DOL-
+      ORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBI-
+      TATUR, IPID UT AS ANT LA SOLOR RE, QUAM EUM QUIBU-
+      SA PREHENDUS CON NONECUPTATUS RECATUM SIMOLOR' %}
+      {{ block_content('about me', paragraph) }}
+      <!-- <h2 class="font-body text-lg uppercase tracking-ultra-wide">about me</h2>
         <p class="font-body text-base uppercase"></p> -->
-      </div>
-      <div>{{ fade_image("/static/images/dalma-jedlicska-leather-7.webp", "dalmacs")}}</div>
-      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-35.webp", "hammer")}}</div>
-      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-4.webp", "punch")}}</div>
-      <div class="col-span-2 mx-60 space-y-14 flex flex-col justify-start">
-        {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS EUM FUGIATUR REMPORE VOLESCIIS DU-
-        CILIS VEL INIMOLORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOLORITIA SAM, ULLACEA-
-        TIA SIT AS SUM, SIMET QUUNTIA AUT HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLORE
-        PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB IMAGNIT AQUAM, SA SI APERIO. IGNI OPTA-
-        TIAS IPSA DOLORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBITATUR, IPID UT AS ANT LA
-        SOLOR RE, QUAM EUM QUIBUSA PREHENDUS CON NONECUPTATUS RECATUM SIMOLOR ATEM-
-        PORRO MOSSUND ELIQUI CUS, INIMI, SOLORIBUS MODIT DOLORRO INT.
-        UCIDE NET, ABO. BORRO ESSERIAM QUE LIQUI CON NOS NET HARCIUM IPSAM VELITECTE NULPA-
-        RIBUS ENIHICTE CONSEQUE SED UT ERIT RE CULLABO. UT A QUE INT, IPSUSAPITAE ETUR ASSI.' %}
-        {{ block_content('atelier', paragraph)}}
-      </div>
-      <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-10.webp", "blade")}}</div>
-      <div class="mx-22 flex flex-col space-y-14 justify-center">
-        {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS
-        EUM FUGIATUR REMPORE VOLESCIIS DUCILIS VEL INIMOL-
-        ORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOL-
-        ORITIA SAM, ULLACEATIA SIT AS SUM, SIMET QUUNTIA AUT
-        HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLO-
-        RE PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB
-        IMAGNIT AQUAM, SA SI APERIO. IGNI OPTATIAS IPSA DOL-
-        ORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBI-
-        TATUR, IPID UT AS ANT LA SOLOR RE, QUAM EUM QUIBU' %}
-        {{ block_content('materials', paragraph)}}
-      </div>
+    </div>
+    <div>{{ fade_image("/static/images/dalma-jedlicska-leather-7.webp", "dalmacs") }}</div>
+    <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-35.webp", "hammer") }}</div>
+    <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-4.webp", "punch") }}</div>
+    <div class="col-span-2 mx-60 space-y-14 flex flex-col justify-start">
+      {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS EUM FUGIATUR REMPORE VOLESCIIS DU-
+      CILIS VEL INIMOLORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOLORITIA SAM, ULLACEA-
+      TIA SIT AS SUM, SIMET QUUNTIA AUT HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLORE
+      PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB IMAGNIT AQUAM, SA SI APERIO. IGNI OPTA-
+      TIAS IPSA DOLORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBITATUR, IPID UT AS ANT LA
+      SOLOR RE, QUAM EUM QUIBUSA PREHENDUS CON NONECUPTATUS RECATUM SIMOLOR ATEM-
+      PORRO MOSSUND ELIQUI CUS, INIMI, SOLORIBUS MODIT DOLORRO INT.
+      UCIDE NET, ABO. BORRO ESSERIAM QUE LIQUI CON NOS NET HARCIUM IPSAM VELITECTE NULPA-
+      RIBUS ENIHICTE CONSEQUE SED UT ERIT RE CULLABO. UT A QUE INT, IPSUSAPITAE ETUR ASSI.' %}
+      {{ block_content('atelier', paragraph) }}
+    </div>
+    <div>{{ fade_image("/static/images/jedlicska_dalma_leather_behind_the_scenes-10.webp", "blade") }}</div>
+    <div class="mx-22 flex flex-col space-y-14 justify-center">
+      {% set paragraph = 'POSSERUM ET AUDAEPE LLANDAM, IPSA VENDAM QUIS
+      EUM FUGIATUR REMPORE VOLESCIIS DUCILIS VEL INIMOL-
+      ORE REMQUE APE VITENDI AUT INCTATUR MAIORIO MOL-
+      ORITIA SAM, ULLACEATIA SIT AS SUM, SIMET QUUNTIA AUT
+      HARCHILLA VOLORPOR SITATURIAS QUATUR, QUI DOLO-
+      RE PREPRO BLATIAM AUT ASPISTO BLACES PARUM ILLAB
+      IMAGNIT AQUAM, SA SI APERIO. IGNI OPTATIAS IPSA DOL-
+      ORIA SUM ES SINIS ET UTEM RA DEBIT QUUNT QUI DEBI-
+      TATUR, IPID UT AS ANT LA SOLOR RE, QUAM EUM QUIBU' %}
+      {{ block_content('materials', paragraph) }}
     </div>
   </div>
-  {% include "components/go_top.html" %}
+</div>
+{% include "components/go_top.html" %}
 {% endblock content %}
