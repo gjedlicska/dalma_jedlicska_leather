@@ -2,27 +2,30 @@
 request.url.path == '/' + target -%}
 <div
   _="
-  init set $menu_open to false
+  init set $menu_open to null
   on touchstart log 'touch start' end
   on click log 'clicked' end
   on mouseenter or touchstart 
-    set $menu_open to true
+    set $menu_open to '{{ display }}'
     send enterNav to #cloud 
-    {% if menu_items %} send enterNav(item_count: {{ menu_items | length }}) to #ribbon then wait 0.3s{% endif %}
-    then if $menu_open
-      send enterNav to #menu{{ display }}
-    end
+    {% if menu_items %}
+      send enterNav(item_count: {{ menu_items | length }}) to #ribbon
+      then wait 0.3s
+      if not $menu_open exit end
+      show #menu{{ display }}
+      then set #menu{{ display }}'s *opacity to 1
+    {% endif %}
   end
   on mouseleave send leaveNav to #cloud 
     set $menu_open to false
-    send leaveNav to #menu{{ display }}
     {% if menu_items %}
-    wait 0.3s
-    then if not $menu_open 
-      log 'closing menu'
-      send leaveNav to #ribbon
-    end
+      set #menu{{ display }}'s *opacity to 0
+      wait 0.3s
+      then if $menu_open is '{{ display }}' exit end
+      hide #menu{{ display }}
     {% endif %} 
+    then if $menu_open exit end
+    send leaveNav to #ribbon
   end
   "
   class="flex flex-col space-y-1 pt-3 group relative"
@@ -38,11 +41,7 @@ request.url.path == '/' + target -%}
   <div
     style="display: none; opacity: 0"
     id="menu{{ display }}"
-    _="
-    on enterNav show me then transition my opacity to 1
-    on leaveNav transition my opacity to 0 then settle then hide me
-    "
-    class="absolute top-9 pt-2 flex flex-col space-y-2"
+    class="absolute top-9 pt-2 flex flex-col space-y-2 transition-opacity duration-300"
   >
     {% for menu_item in menu_items %}
     <a class="whitespace-nowrap" href="">{{ menu_item }}</a>
@@ -53,7 +52,7 @@ request.url.path == '/' + target -%}
 
 <div
   id="cloud"
-  _="on enterNav transition my opacity to 0.4 end 
+  _="on enterNav transition my opacity to 0.4
      on leaveNav transition my opacity to 0"
   class="bg-white pointer-events-none absolute top-0 left-0 w-screen h-screen z-10 opacity-0"
 ></div>
