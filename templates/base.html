@@ -27,13 +27,12 @@
         {% endblock style %}
     </head>
     <body>
-        {% if DEBUG %}{{ hot_reload.script(url_for('hot-reload')) | safe }}{% endif %}
+        {% if DEBUG == 'true' %}{{ hot_reload.script(url_for('hot-reload')) | safe }}{% endif %}
         <div class="{% if full_height %}h-screen{% endif %} flex flex-col">
             {% include "components/nav.html" %}
             {% block content %}
             {% endblock content %}
             {% include "components/footer.html" %}
         </div>
-    </div>
-</body>
+    </body>
 </html>
