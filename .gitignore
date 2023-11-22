@@ -1,8 +1,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,linux,asdf
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,linux,asdf
 
+### design files ###
+
+design/**
+
 ### asdf ###
 /.tool-versions
+/.envrc
 
 ### Linux ###
 *~
