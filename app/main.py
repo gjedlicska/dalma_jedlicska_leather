@@ -1,6 +1,9 @@
+import os
 from pathlib import Path
 from typing import cast
 
+import arel
+from dalma_jedlicska_leather import services
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -11,9 +14,6 @@ from fastapi.templating import Jinja2Templates
 from starlette_babel import LocaleMiddleware, get_translator
 from starlette_babel.contrib.jinja import configure_jinja_env
 
-from dalma_jedlicska_leather import services
-import arel
-import os
 
 root_dir = Path(__file__).parent.parent
 
