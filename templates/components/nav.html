@@ -1,32 +1,88 @@
-{% macro nav_link(target, display) -%}
-  {% set current_page = request.url.path == '/' + target -%}
-  <div _="on mouseenter show #cloud then transition #cloud's opacity to 0.4 on mouseleave transition #cloud's opacity to 0"
-       class="h-4 group ">
-    <a href="/{{ target }}">{{ display }}</a>
-    <div class="w-full {% if current_page %}opacity-100{% else %}opacity-0{% endif %} group-hover:opacity-100 transition-opacity duration-200 flex justify-center">
-      <svg class="h-2" viewBox="0 0 10 10">
-        <circle cx="5" cy="5" r="2" fill="black" />
-      </svg>
-    </div>
+{% macro nav_link(target, display, menu_items) -%} {% set current_page =
+request.url.path == '/' + target -%}
+<div
+  _="
+  init set $menu_open to false
+  on touchstart log 'touch start' end
+  on click log 'clicked' end
+  on mouseenter or touchstart 
+    set $menu_open to true
+    send enterNav to #cloud 
+    {% if menu_items %} send enterNav(item_count: {{ menu_items | length }}) to #ribbon then wait 0.3s{% endif %}
+    then if $menu_open
+      send enterNav to #menu{{ display }}
+    end
+  end
+  on mouseleave send leaveNav to #cloud 
+    set $menu_open to false
+    send leaveNav to #menu{{ display }}
+    {% if menu_items %}
+    wait 0.3s
+    then if not $menu_open 
+      log 'closing menu'
+      send leaveNav to #ribbon
+    end
+    {% endif %} 
+  end
+  "
+  class="flex flex-col space-y-1 pt-3 group relative"
+>
+  <a href="/{{ target }}">{{ display }}</a>
+  <div
+    class="w-full {% if current_page %}opacity-100{% else %}opacity-0{% endif %} group-hover:opacity-100 transition-opacity duration-200 flex justify-center"
+  >
+    <svg class="h-2" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="4" fill="black" />
+    </svg>
   </div>
-  <!-- <a class="flex h-8 items-center" href="/{{ target }}">
-    <div _="{%- if current_page -%}on load add .opacity-100 remove .opacity-0{%- endif -%}" class="bullet h-full transition-opacity ease-in duration-300 opacity-0 {% if current_page %}w-3{% else %}w-0{% endif %}">
-    </div>
-    <p _="{%- if current_page -%}on load add .translate-x-6{%- endif -%}" class="label transition-all duration-300 ease-out transform {% if current_page %}font-black text-black {% else %} hover:text-sand-hover {% endif %}">
-      {{ display }}
-    </p>
-  </a>-->
+  <div
+    style="display: none; opacity: 0"
+    id="menu{{ display }}"
+    _="
+    on enterNav show me then transition my opacity to 1
+    on leaveNav transition my opacity to 0 then settle then hide me
+    "
+    class="absolute top-9 pt-2 flex flex-col space-y-2"
+  >
+    {% for menu_item in menu_items %}
+    <a class="whitespace-nowrap" href="">{{ menu_item }}</a>
+    {% endfor %}
+  </div>
+</div>
 {%- endmacro %}
-<div id="cloud"
-     class="bg-white pointer-events-none absolute top-0 left-0 w-screen h-screen z-10 opacity-0"></div>
-<nav class="sticky top-0 z-10 bg-white flex h-40 font-body text-nav tracking-widest uppercase">
-  <div class="w-1/6 flex items-center justify-center ">
+
+<div
+  id="cloud"
+  _="on enterNav transition my opacity to 0.4 end 
+     on leaveNav transition my opacity to 0"
+  class="bg-white pointer-events-none absolute top-0 left-0 w-screen h-screen z-10 opacity-0"
+></div>
+<div
+  id="ribbon"
+  _="
+  init set my *height to 8rem
+  on enterNav(item_count)
+    set my *height to `${ 8 + (( item_count - 1 ) * 1.75 )}`rem
+  end
+  on leaveNav 
+    set my *height to 8rem
+  end
+  "
+  class="fixed w-full z-10 top-0 left-0 transition-[height] duration-300 bg-white"
+></div>
+<nav
+  hx-boost="true"
+  class="sticky top-0 z-10 bg-white flex h-40 font-body text-nav tracking-widest uppercase"
+>
+  <div class="w-1/6 flex items-center justify-center">
     <a class="h-14" href="/">{% include "components/logo.html" %}</a>
   </div>
   <div class="flex items-center space-x-18 flex-grow">
-    {{ nav_link("products", _("products")) }}
-    {{ nav_link("stories", _("stories")) }}
-    {{ nav_link("info", _("info")) }}
+    {{ nav_link("products", _("products"), ["all products", "backpacks", "clutch
+    bags", "shoulder bags", "crossbody"]) }} {{ nav_link("stories",
+    _("stories"), ["foo"]) }} {{ nav_link("info", _("info")) }}
   </div>
-  <div class="w-1/6 flex items-center justify-center">{% include "components/lang_selector.html" %}</div>
+  <div class="w-1/6 flex items-center justify-center">
+    {% include "components/lang_selector.html" %}
+  </div>
 </nav>
