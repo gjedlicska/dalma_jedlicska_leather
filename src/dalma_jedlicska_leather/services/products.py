@@ -1,85 +1,54 @@
-from typing import Sequence
+from typing import Awaitable, Iterable, Sequence, Callable
 
 from attrs import define
-from dalma_jedlicska_leather.services.locales import Locale
-from dalma_jedlicska_leather.services.models import ImageData
+from dalma_jedlicska_leather.domain.locale import Locale, Price
+from dalma_jedlicska_leather.domain.images import ImageData
+from dalma_jedlicska_leather.domain.product import Product
 
 
 @define
-class ModelData:
-    category: str
+class ProductQuery:
+    cursor: str | None
+    model: str | None
+    color: str | None
 
 
 @define
-class ProductData:
-    id: str
-    image: ImageData
-    description: str
-    model: ModelData
-    price: float
-    material_description: str
+class ProductDisplayInformation:
+    price: Price
+    product_data: Product
+    display_images: Sequence[ImageData]
 
 
-def get_products(locale: Locale) -> Sequence[ProductData]:
-    return [
-        ProductData(
-            "foo1",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-        ProductData(
-            "bar2",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-        ProductData(
-            "bar1",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-        ProductData(
-            "foo1",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-        ProductData(
-            "bar2",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-        ProductData(
-            "bar1",
-            ImageData(
-                "/static/images/jedlicska_dalma_collection -3.webp", "DUMMY THINGHY"
-            ),
-            "asdfb",
-            ModelData("capacitor"),
-            123.123,
-            "glitter glitter glitter",
-        ),
-    ]
+@define
+class PaginatedProductDisplayInformation:
+    items: Sequence[ProductDisplayInformation | ImageData]
+    cursor: str | None
+
+
+@define
+class ProductHandler:
+    _product_getter: Callable[[ProductQuery], Awaitable[Iterable[Product]]]
+    _gap_image_getter: Callable[[ProductQuery], Awaitable[Iterable[ImageData]]]
+
+    async def get_paginated_translated_products_with_gap_images(
+        self, product_query: ProductQuery, locale: Locale
+    ) -> PaginatedProductDisplayInformation:
+        product_or_gap_images = []
+        gap_images = (i for i in await self._gap_image_getter(product_query))
+        matching_products = 0
+        for product in await self._product_getter(product_query):
+            # every 3rd image, not including 0
+            if matching_products and matching_products % 3 == 0:
+                gap_image = next(gap_images, None)
+                if gap_image:
+                    product_or_gap_images.append(gap_image)
+
+            if price := next(
+                (p for p in product.model.prices if p.locale == locale), None
+            ):
+                matching_products += 1
+                product_or_gap_images.append(
+                    ProductDisplayInformation(price, product, product.display_images)
+                )
+        return PaginatedProductDisplayInformation(product_or_gap_images, cursor=None)

@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Sequence
 from attrs import define
 
-from dalma_jedlicska_leather.services.models import ImageData
+from dalma_jedlicska_leather.domain.images import ImageData
 
 
 @define
@@ -27,25 +27,36 @@ stories = [
         datetime(2023, 3, 16),
         ImageData(
             "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
+            "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
             "porcelain",
         ),
-        ImageData("/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown"),
+        ImageData(
+            "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+            "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+            "brown",
+        ),
         [
             StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-51.webp",
                 "/static/images/jedlicska_dalma_film_look_porcelain-51.webp",
                 "porcelain",
                 True,
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-21.webp",
+                "/static/images/jedlicska_dalma_film_look_porcelain-21.webp",
                 "porcelain",
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-34.webp",
+                "/static/images/jedlicska_dalma_film_look_porcelain-34.webp",
                 "porcelain",
             ),
             StoryImage(
-                "/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown", True
+                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+                "brown",
+                True,
             ),
         ],
     ),
@@ -53,16 +64,24 @@ stories = [
         "brown",
         "brown",
         datetime(2023, 3, 16),
-        ImageData("/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown"),
         ImageData(
+            "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+            "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+            "brown",
+        ),
+        ImageData(
+            "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
             "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
             "porcelain",
         ),
         [
             StoryImage(
-                "/static/images/jedlicska_dalma_film_look_brown-64.webp", "brown"
+                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+                "brown",
             ),
             StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
                 "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
                 "porcelain",
             ),
@@ -72,14 +91,24 @@ stories = [
         "mud",
         "mud",
         datetime(2021, 10, 10),
-        ImageData("/static/images/jedlicska_dalma_collection -140.webp", "mud"),
         ImageData(
+            "/static/images/jedlicska_dalma_collection -140.webp",
+            "/static/images/jedlicska_dalma_collection -140.webp",
+            "mud",
+        ),
+        ImageData(
+            "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
             "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
             "porcelain",
         ),
         [
-            StoryImage("/static/images/jedlicska_dalma_collection -140.webp", "mud"),
             StoryImage(
+                "/static/images/jedlicska_dalma_collection -140.webp",
+                "/static/images/jedlicska_dalma_collection -140.webp",
+                "mud",
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
                 "/static/images/jedlicska_dalma_film_look_porcelain-32.webp",
                 "porcelain",
             ),

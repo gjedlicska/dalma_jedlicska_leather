@@ -1,3 +1,4 @@
-from dalma_jedlicska_leather import services
+from . import services
+from . import repositories
 
-__all__ = ["services"]
+__all__ = ["services", "repositories"]

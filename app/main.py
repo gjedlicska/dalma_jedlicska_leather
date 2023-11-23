@@ -4,6 +4,10 @@ from typing import cast
 
 import arel
 from dalma_jedlicska_leather import services
+from dalma_jedlicska_leather.domain.images import ImageData
+from dalma_jedlicska_leather.domain.locale import Locale
+from dalma_jedlicska_leather.services.products import ProductHandler, ProductQuery
+from dalma_jedlicska_leather.repositories import products as product_repo
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -17,7 +21,7 @@ from starlette_babel.contrib.jinja import configure_jinja_env
 
 root_dir = Path(__file__).parent.parent
 
-supported_locales = [locale.value for locale in services.Locale]
+supported_locales = [locale.value for locale in Locale]
 shared_translator = get_translator()  # process global instance
 shared_translator.load_from_directories(
     [root_dir.joinpath("locales")]
@@ -38,13 +42,14 @@ app = FastAPI(
                 "testserver",
                 "hyperion",
                 "hyperion.local",
+                "192.168.0.132",
             ],
         ),
     ]
 )
 templates = Jinja2Templates(directory="templates")
 configure_jinja_env(templates.env)
-
+templates.env.tests["image_data"] = lambda input: isinstance(input, ImageData)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
@@ -64,8 +69,20 @@ async def home_page(request: Request) -> HTMLResponse:
 
 @app.get("/products", response_class=HTMLResponse)
 async def products_page(request: Request) -> HTMLResponse:
-    products = services.get_products(services.Locale.HU)
-    context = {"request": request, "products": products} | global_context
+    product_handler = ProductHandler(
+        product_repo.get_products, product_repo.get_gap_images
+    )
+    paginated_product_data = (
+        await product_handler.get_paginated_translated_products_with_gap_images(
+            # TODO: determine locale from request
+            ProductQuery(cursor=None, model=None, color=None),
+            Locale.HU,
+        )
+    )
+    context = {
+        "request": request,
+        "paginated_product_data": paginated_product_data,
+    } | global_context
     response = cast(HTMLResponse, templates.TemplateResponse("products.html", context))
     return response
 

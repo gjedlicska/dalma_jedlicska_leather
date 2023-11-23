@@ -25,6 +25,7 @@ module.exports = {
       letterSpacing: {
         // wide: '.25rem',
         widest: ".09rem",
+        "wide-title": ".13rem",
         "very-wide": ".2rem",
         "extra-wide": ".45rem",
         "ultra-wide": ".9rem",

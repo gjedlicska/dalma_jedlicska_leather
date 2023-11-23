@@ -2,12 +2,6 @@ from attr import define
 
 
 @define
-class ImageData:
-    source: str
-    description: str
-
-
-@define
 class ImageLink:
     to: str
     alt: str

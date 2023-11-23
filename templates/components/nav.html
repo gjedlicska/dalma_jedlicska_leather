@@ -44,7 +44,7 @@ request.url.path == '/' + target -%}
     class="absolute top-9 pt-2 flex flex-col space-y-2 transition-opacity duration-300"
   >
     {% for menu_item in menu_items %}
-    <a class="whitespace-nowrap" href="">{{ menu_item }}</a>
+    <a class="whitespace-nowrap" href="/{{ target }}">{{ menu_item }}</a>
     {% endfor %}
   </div>
 </div>

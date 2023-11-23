@@ -1,12 +1,12 @@
 from typing import Sequence
 from attr import define, field
 
-from dalma_jedlicska_leather.services.models import ImageData, ImageLink
+from dalma_jedlicska_leather.services.models import ImageLink
+from dalma_jedlicska_leather.domain.images import ImageData
 
 
 @define
 class HomeImageData(ImageData):
-    low_res_source: str
     height_sixth: int
     z_index: int
     ratio: str
