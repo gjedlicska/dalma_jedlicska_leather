@@ -1,16 +1,16 @@
-from typing import Awaitable, Iterable, Sequence, Callable
+from typing import Awaitable, Iterable, List, Sequence, Callable
 
 from attrs import define
 from dalma_jedlicska_leather.domain.locale import Locale, Price
 from dalma_jedlicska_leather.domain.images import ImageData
-from dalma_jedlicska_leather.domain.product import Product
+from dalma_jedlicska_leather.domain.product import Product, Model
 
 
 @define
 class ProductQuery:
-    cursor: str | None
-    model: str | None
-    color: str | None
+    cursor: str | None = None
+    model: str | None = None
+    color: str | None = None
 
 
 @define
@@ -52,3 +52,7 @@ class ProductHandler:
                     ProductDisplayInformation(price, product, product.display_images)
                 )
         return PaginatedProductDisplayInformation(product_or_gap_images, cursor=None)
+
+    async def get_all_model_categories(self) -> List[str]:
+        products = await self._product_getter(ProductQuery())
+        return list(set(p.model.category for p in products))

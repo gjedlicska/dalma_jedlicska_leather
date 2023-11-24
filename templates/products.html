@@ -3,7 +3,21 @@
     Dalma's products
 {% endblock title %}
 {% block content %}
-    <div class="grid grid-cols-3 gap-x-3 gap-y-14 pt-22 pb-44 mx-1/6">
+    <div class="mx-1/6 tracking-wide-title">
+    <div class="ml-64 flex text-sm font-medium font-body">
+        <p>type</p>
+        <div class="ml-20 text-sand-hover space-x-12 mt-[0.2rem] flex font-thin text-xs items-center">
+        {% for category in model_categories %}
+        <div class="group flex flex-col">
+          <a class="uppercase group-hover:text-black transition-colors duration-300 {% if active_category == category %}text-black{% endif %}"hx-boost="true" href="/products/?q={{ category }}">{{ category }}</a>
+          <svg class="h-2 group-hover:opacity-100 transition-opacity  duration-300 {% if active_category == category %}opacity-100{% else %}opacity-0{% endif %}" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="4" fill="black" />
+        </svg>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="grid grid-cols-3 gap-x-3 gap-y-14 pt-18 pb-44">
         {% for product in paginated_product_data.items %}
             {% if product is image_data %}
                     <img class="col-span-3 px-36 object-cover transition-shadow "
@@ -29,6 +43,7 @@
                 </div>
             </a>
             {% endif %}
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
+    </div>
 {% endblock content %}

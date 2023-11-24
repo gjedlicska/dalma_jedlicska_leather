@@ -27,8 +27,19 @@ shared_translator.load_from_directories(
     [root_dir.joinpath("locales")]
 )  # one or multiple locale directories
 
+product_handler = ProductHandler(product_repo.get_products, product_repo.get_gap_images)
 
-global_context = {"supported_locales": supported_locales}
+ALL_CATEGORIES = "all"
+
+
+async def _get_global_context() -> dict[str, object]:
+    model_categories = await product_handler.get_all_model_categories()
+    model_categories.insert(0, ALL_CATEGORIES)
+    return {
+        "supported_locales": supported_locales,
+        "model_categories": model_categories,
+    }
+
 
 app = FastAPI(
     middleware=[
@@ -62,34 +73,33 @@ async def home_page(request: Request) -> HTMLResponse:
         "request": request,
         "logo_active": True,
         "slideshow_images": slideshow_images,
-    } | global_context
+    } | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("home.html", context))
     return response
 
 
 @app.get("/products", response_class=HTMLResponse)
-async def products_page(request: Request) -> HTMLResponse:
-    product_handler = ProductHandler(
-        product_repo.get_products, product_repo.get_gap_images
-    )
+async def products_page(request: Request, q: str | None = None) -> HTMLResponse:
+    model = None if q == ALL_CATEGORIES else q
     paginated_product_data = (
         await product_handler.get_paginated_translated_products_with_gap_images(
             # TODO: determine locale from request
-            ProductQuery(cursor=None, model=None, color=None),
+            ProductQuery(cursor=None, model=model, color=None),
             Locale.HU,
         )
     )
     context = {
         "request": request,
+        "active_category": q if q else ALL_CATEGORIES,
         "paginated_product_data": paginated_product_data,
-    } | global_context
+    } | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("products.html", context))
     return response
 
 
 @app.get("/collections", response_class=HTMLResponse)
 async def collections_page(request: Request) -> HTMLResponse:
-    context = {"request": request} | global_context
+    context = {"request": request} | await _get_global_context()
     response = cast(
         HTMLResponse, templates.TemplateResponse("collections.html", context)
     )
@@ -99,7 +109,7 @@ async def collections_page(request: Request) -> HTMLResponse:
 @app.get("/stories", response_class=HTMLResponse)
 async def stories_page(request: Request) -> HTMLResponse:
     stories = await services.get_stories()
-    context = {"request": request, "stories": stories} | global_context
+    context = {"request": request, "stories": stories} | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("stories.html", context))
     return response
 
@@ -109,14 +119,14 @@ async def story_page(story_id: str, request: Request) -> HTMLResponse:
     story = await services.get_story(story_id)
     if not story:
         raise HTTPException(status_code=404, detail="Item not found")
-    context = {"request": request, "story": story} | global_context
+    context = {"request": request, "story": story} | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("story.html", context))
     return response
 
 
 @app.get("/info", response_class=HTMLResponse)
 async def info_page(request: Request) -> HTMLResponse:
-    context = {"request": request} | global_context
+    context = {"request": request} | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("info.html", context))
     return response
 
@@ -132,7 +142,7 @@ async def set_language(request: Request, lang: str) -> RedirectResponse:
 
 @app.exception_handler(404)
 async def not_found_page(request: Request, _) -> HTMLResponse:
-    context = {"request": request} | global_context
+    context = {"request": request} | await _get_global_context()
     response = cast(HTMLResponse, templates.TemplateResponse("404.html", context))
     return response
 

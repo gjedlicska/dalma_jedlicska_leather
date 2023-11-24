@@ -59,7 +59,7 @@ _products = [
     Product(
         id="bar2",
         description="asdfb",
-        model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        model=Model("akela", "clutch", [Price(Locale.HU, 90000)]),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
