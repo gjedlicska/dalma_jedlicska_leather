@@ -9,7 +9,12 @@
         <div class="ml-20 text-sand-hover space-x-12 mt-[0.2rem] flex font-thin text-xs items-center">
         {% for category in model_categories %}
         <div class="group flex flex-col">
-          <a class="uppercase group-hover:text-black transition-colors duration-300 {% if active_category == category %}text-black{% endif %}"hx-boost="true" href="/products/?q={{ category }}">{{ category }}</a>
+          <a 
+            class="uppercase group-hover:text-black transition-colors duration-300 {% if active_category == category %}text-black{% endif %}"
+            hx-boost="true" 
+            href="/products?q={{ category }}">
+              {{ category }}
+          </a>
           <svg class="h-2 group-hover:opacity-100 transition-opacity  duration-300 {% if active_category == category %}opacity-100{% else %}opacity-0{% endif %}" viewBox="0 0 20 20">
             <circle cx="10" cy="10" r="4" fill="black" />
         </svg>
