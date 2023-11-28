@@ -1,54 +1,37 @@
 {% extends "base.html" %}
 {% block title %}
-    Dalma's products
+  Dalma's products
 {% endblock title %}
+{% from "components/price_display.html" import price_display %}
 {% block content %}
-    <div class="mx-1/6 tracking-wide-title">
-    <div class="ml-64 flex text-sm font-medium font-body">
-        <p>type</p>
-        <div class="ml-20 text-sand-hover space-x-12 mt-[0.2rem] flex font-thin text-xs items-center">
-        {% for category in model_categories %}
-        <div class="group flex flex-col">
-          <a 
-            class="uppercase group-hover:text-black transition-colors duration-300 {% if active_category == category %}text-black{% endif %}"
-            hx-boost="true" 
-            href="/products?q={{ category }}">
-              {{ category }}
-          </a>
-          <svg class="h-2 group-hover:opacity-100 transition-opacity  duration-300 {% if active_category == category %}opacity-100{% else %}opacity-0{% endif %}" viewBox="0 0 20 20">
-            <circle cx="10" cy="10" r="4" fill="black" />
-        </svg>
-        </div>
-        {% endfor %}
-        </div>
+  <div class="mx-1/6">
+    <div class="ml-64">
+      {% include "components/category_selector.html" %}
     </div>
     <div class="grid grid-cols-3 gap-x-3 gap-y-14 pt-18 pb-44">
-        {% for product in paginated_product_data.items %}
-            {% if product is image_data %}
-                    <img class="col-span-3 px-36 object-cover transition-shadow "
-                         alt="{{ product.description }}"
-                         src="{{ product.source }}"/>
-            {% else %}
-            <a href="/products/{{ product.product_data.id }}"
-               id="{{ product.product_data.id }}"
-               class="group flex flex-col">
-                <div class="relative aspect-[1/1.5] transition-shadow duration-500 group-hover:shadow-md">
-                    <img class="absolute h-full w-full object-cover transition-shadow "
-                         alt="{{ product.display_images[0].description }}"
-                         src="{{ product.display_images[0].source }}"/>
-                    <div class="absolute h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100"/>
-                    </div>
-                </div>
-                <div class="pt-6 font-body uppercase group-hover:text-sand-hover transition-colors ease-in duration-300">
-                    <div class="flex-grow  tracking-wide-title pb-2">{{ product.product_data.model.category }}</div>
-                    <div class="flex space-x-2 font-body text-[0.9rem] tracking-wide-title">
-                      <p>{{ "{0:_}".format(product.price.value).replace("_", " ") }}</p>
-                      <p>{{ product.price.currency }}</p>
-                    </div>
-                </div>
-            </a>
-            {% endif %}
-        {% endfor %}
-    </div>
-    </div>
+      {% for product in paginated_product_data.items %}
+        {% if product is image_data %}
+          <img class="col-span-3 px-36 object-cover transition-shadow "
+               alt="{{ product.description }}"
+               src="{{ product.source }}" />
+        {% else %}
+          <a href="/products/{{ product.product_data.id }}"
+             id="{{ product.product_data.id }}"
+             class="group flex flex-col">
+            <div class="relative aspect-[1/1.5] transition-shadow duration-500 group-hover:shadow-md">
+              <img class="absolute h-full w-full object-cover transition-shadow "
+                   alt="{{ product.display_images[0].description }}"
+                   src="{{ product.display_images[0].source }}" />
+              <div class="absolute h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100" />
+            </div>
+          </div>
+          <div class="pt-6 font-body uppercase group-hover:text-sand-hover transition-colors ease-in duration-300">
+            <div class="flex-grow  tracking-wide-title pb-2">{{ product.product_data.model.category }}</div>
+            {{ price_display(product.price) }}
+          </div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

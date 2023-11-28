@@ -3,7 +3,7 @@ from typing import Awaitable, Iterable, List, Sequence, Callable
 from attrs import define
 from dalma_jedlicska_leather.domain.locale import Locale, Price
 from dalma_jedlicska_leather.domain.images import ImageData
-from dalma_jedlicska_leather.domain.product import Product, Model
+from dalma_jedlicska_leather.domain.product import Product
 
 
 @define
@@ -56,3 +56,22 @@ class ProductHandler:
     async def get_all_model_categories(self) -> List[str]:
         products = await self._product_getter(ProductQuery())
         return list(set(p.model.category for p in products))
+
+    async def get_product_by_id(self, product_id: str) -> Product | None:
+        return next(
+            (
+                p
+                for p in await self._product_getter(ProductQuery())
+                if p.id == product_id
+            ),
+            None,
+        )
+
+    async def get_related_products(self, _: str) -> List[Product]:
+        related_products = []
+        max_products = 4
+        for i, product in enumerate(await self._product_getter(ProductQuery())):
+            if i == max_products:
+                break
+            related_products.append(product)
+        return related_products

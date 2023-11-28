@@ -38,7 +38,8 @@ devtools = "^0.12.2"
 profile = "black"
 
 [tool.djlint]
-profile = "jinja"
+profile = "html"
+indent = 2
 ignore = "J018"
 
 [build-system]

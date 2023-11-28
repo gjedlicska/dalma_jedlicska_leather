@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 {% block title %}
-    Dalma's stories
+  Dalma's stories
 {% endblock title %}
 {% block content %}
-    <div class="grid grid-cols-2 gap-x-5 gap-y-10 mx-1/6">
-        {% for story in stories %}
-            <a href="/stories/{{ story.slug }}"
-               class="group ease-in-out flex flex-col space-y-5 items-center">
-                <div class="bg-blue-100 relative w-full aspect-[7/6]">
-                    <div class="absolute">
-                        <img class="object-cover"
-                             src="{{ story.hover_image.source }}"
-                             alt="{{ story.hover_image.description }}"/>
-                    </div>
-                    <div class="absolute">
-                        <img class="object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0"
-                             src="{{ story.cover_image.source }}"
-                             alt="{{ story.cover_image.description }}"/>
-                    </div>
-                </div>
-                <div class="group-hover:text-sand-hover transition-all flex flex-col items-center pt-5 space-y-3">
-                    <p class="font-body uppercase text-sm tracking-extra-wide">{{ story.name }}</p>
-                    <p class="font-body uppercase text-sm tracking-wider">{{ story.date.year }}</p>
-                </div>
-                <svg class="h-2 " viewBox="0 0 10 10">
-                    <circle cx="5" cy="5" r="3" class="fill-black transition-all group-hover:fill-sand-hover" />
-                </svg>
-            </a>
-        {% endfor %}
-    </div>
+  <div class="grid grid-cols-2 gap-x-5 gap-y-10 mx-1/6">
+    {% for story in stories %}
+      <a href="/stories/{{ story.slug }}"
+         class="group ease-in-out flex flex-col space-y-5 items-center">
+        <div class="bg-blue-100 relative w-full aspect-[7/6]">
+          <div class="absolute">
+            <img class="object-cover"
+                 src="{{ story.hover_image.source }}"
+                 alt="{{ story.hover_image.description }}" />
+          </div>
+          <div class="absolute">
+            <img class="object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0"
+                 src="{{ story.cover_image.source }}"
+                 alt="{{ story.cover_image.description }}" />
+          </div>
+        </div>
+        <div class="group-hover:text-sand-hover transition-all flex flex-col items-center pt-5 space-y-3">
+          <p class="font-body uppercase text-sm tracking-extra-wide">{{ story.name }}</p>
+          <p class="font-body uppercase text-sm tracking-wider">{{ story.date.year }}</p>
+        </div>
+        <svg class="h-2 " viewBox="0 0 10 10">
+          <circle cx="5" cy="5" r="3" class="fill-black transition-all group-hover:fill-sand-hover" />
+        </svg>
+      </a>
+    {% endfor %}
+  </div>
 {% endblock content %}

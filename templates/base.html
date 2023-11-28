@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="description" content="Dalma Jedlicska Leather"/>
-        <meta name="keywords" content="Dalma Jedlicska Leather"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Dalma Jedlicska Leather" />
+    <meta name="keywords" content="Dalma Jedlicska Leather" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
+    <!-- Htmx -->
+    <script src="https://unpkg.com/htmx.org@1.9.8" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    {% block style %}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
+            rel="stylesheet" />
+      <link href="/static/css/style.css" rel="stylesheet" />
+      <link href="/static/favicon.png" rel="shortcut icon" />
+      <link href="/static/fontawesome/css/fontawesome.css" rel="stylesheet">
+      <link href="/static/fontawesome/css/brands.css" rel="stylesheet">
+      <link href="/static/fontawesome/css/solid.css" rel="stylesheet">
+    {% endblock style %}
+  </head>
+  <body>
+    {% if DEBUG == 'true' %}{{ hot_reload.script(url_for('hot-reload') ) | safe }}{% endif %}
+    <div class="{% if full_height %}h-screen{% endif %} flex flex-col">
+      {% include "components/nav.html" %}
+      {% block content %}
+      {% endblock content %}
+      {% include "components/footer.html" %}
+    </div>
+  </body>
+  <style>
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-        <title>
-            {% block title %}
-            {% endblock title %}
-        </title>
-        <!-- Htmx -->
-
-        <script src="https://unpkg.com/htmx.org@1.9.8"  crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-        {% block style %}
-            <link rel="preconnect" href="https://fonts.googleapis.com"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-            <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
-                  rel="stylesheet"/>
-            <link href="/static/css/style.css" rel="stylesheet" />
-            <link href="/static/favicon.png" rel="shortcut icon" />
-            <link href="/static/fontawesome/css/fontawesome.css" rel="stylesheet">
-            <link href="/static/fontawesome/css/brands.css" rel="stylesheet">
-            <link href="/static/fontawesome/css/solid.css" rel="stylesheet">
-        {% endblock style %}
-    </head>
-    <body>
-        {% if DEBUG == 'true' %}{{ hot_reload.script(url_for('hot-reload')) | safe }}{% endif %}
-        <div class="{% if full_height %}h-screen{% endif %} flex flex-col">
-            {% include "components/nav.html" %}
-            {% block content %}
-            {% endblock content %}
-            {% include "components/footer.html" %}
-        </div>
-    </body>
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+  </style>
 </html>

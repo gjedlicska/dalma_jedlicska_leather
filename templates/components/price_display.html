@@ -1,0 +1,8 @@
+{% macro price_display(price) -%}
+<div
+  class="flex space-x-2 font-body text-[0.9rem] uppercase tracking-wide-title"
+>
+  <p>{{ "{0:_}".format(price.value).replace("_", " ") }}</p>
+  <p>{{ price.currency }}</p>
+</div>
+{%- endmacro %}

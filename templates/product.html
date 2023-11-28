@@ -1,0 +1,156 @@
+{% macro toggle_text(heading) -%}
+<button
+  _="init set :open to false 
+               on click if :open 
+                 trigger close on me 
+               else 
+                 trigger open on me
+               end 
+               on open send close to .toggle_button then settle then set :open to true then send open to the next <p/>
+               on close set :open to false then send close to the next <p/>
+               "
+  class="toggle_button flex space-x-5 items-center"
+>
+  <p class="pb-[0.23rem]">+</p>
+  <p class="uppercase text-xs tracking-wide-title">{{ heading }}</p>
+</button>
+<p
+  style="max-height: 0px"
+  _="on close transition my *max-height to 0px using 'all 0.3s ease-out' 
+     on open go to the bottom of me +600px smoothly then transition my *max-height to 600px using 'all 0.3s ease-out'"
+  class="ease-out overflow-hidden my-2 text-xs tracking-wider leading-5 whitespace-pre-wrap"
+>
+  A KLEIO közepes méretű hátitáska geometriai sziluettje izgalmas kontrasztot
+  alkot a lágy ívekkel. A hosszan futó cipzáras záródás megkönnyíti a belső tér
+  használatát, míg a bőrbetétek biztosítják, hogy a táska szélesen kinyíljon,
+  miközben minden érték biztonságban marad. Válogatott olasz marhabőrből készül,
+  belseje teljes felületen sertés bőrrel kasírozott. A nagy főrekeszen kívül egy
+  belső lapos kis zsebbel és egy külső kis cipzáras zsebbel rendelkezik.
+  Záródása fémcipzárral biztosított. Vállpántja állítható hosszúságú.
+</p>
+{%- endmacro %} {% extends "base.html" %} {% block title %} Dalma's products
+{%endblock title%} {% block content %} {% from "components/price_display.html"
+import price_display %}
+<div class="mx-1/6">
+  <div class="ml-64 pb-8 sticky top-0">
+    {% include "components/category_selector.html" %}
+  </div>
+  <div class="w-full grid grid-cols-2">
+    <div class="flex flex-col w-ful h-full">
+      <div class="relative flex">
+        <div
+          id="product_images"
+          _="on scroll_to(id) scrollTo({top: id.offsetTop - me.offsetTop, behavior: 'smooth'}) on me
+            init registerImageObservers() 
+           "
+          class="snap-y snap-mandatory snap-center aspect-[6/7] overflow-y-scroll scroll-smooth space-y-6 scrollbar-hide"
+        >
+          {% for image in product.display_images %}
+          <img
+            id="product_image_{{ loop.index }}"
+            class="w-full h-full snap-center object-cover product-image"
+            alt="{{ image.description }}"
+            src="{{ image.source }}"
+          />
+          {% endfor %}
+        </div>
+        <div
+          class="absolute bottom-0 -right-12 justify-end items-end flex flex-col pb-11 space-y-5 h-full"
+        >
+          {% for image in product.display_images %}
+          <button
+            id="image_indicator_{{ loop.index }}"
+            style="opacity: 0.3"
+            class="image_indicator transition-opacity"
+            _="init if {{ loop.index }} is equal to 1 set my *opacity to 1 end 
+                   on set_opacity(opacity) set my *opacity to opacity
+                   on click send scroll_to(id: #product_image_{{loop.index}}) to #product_images"
+          >
+            <svg class="h-[0.9rem]" viewBox="0 0 20 20">
+              <circle cx="10" cy="10" r="4" fill="black" />
+            </svg>
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="flex-grow"></div>
+    </div>
+    <div class="flex pt-16">
+      <div class="flex flex-col flex-grow pl-32 pr-16 space-y-9">
+        <p class="uppercase text-xl tracking-very-wide font-medium">
+          {{ product.model.category }}
+        </p>
+        {{ price_display(product.model.prices[0]) }}
+        <p class="text-xs tracking-wider leading-5 whitespace-pre-wrap">
+          {{ product.description }}
+        </p>
+        <div>{{ toggle_text("details") }} {{ toggle_text("care") }}</div>
+        <button
+          class="w-full h-10 bg-sand-dark flex justify-center items-center"
+        >
+          <p class="text-sm uppercase font-semibold tracking-wide-title">
+            order
+          </p>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex flex-col space-y-5 mt-18 items-center">
+    <div class="h-40 flex space-x-4">
+      {% for related_product in related_products %}
+      <a
+        class="h-full aspect-square bg-gray-50"
+        href="/products/{{related_product.id}}"
+      >
+        <img
+          class="object-cover"
+          src="{{ related_product.display_images[0].source }}"
+          alt="{{related_product.display_images[0].description}}"
+        />
+      </a>
+      {% endfor %}
+    </div>
+    <p class="uppercase font-body text-xs tracking-widest">related products</p>
+  </div>
+</div>
+<script>
+  let observers = [];
+
+  function intersectionCallback(entries) {
+    entries.forEach((entry) => {
+      const elementId = entry.target.id.split("_").pop();
+      const intersectionRatio = entry.intersectionRatio;
+      const imageIndicator = document.querySelector(
+        `#image_indicator_${elementId}`,
+      );
+      const newMin = 0.3;
+      const d = (1 - newMin) / (1 - 0);
+      const newOpacity = (intersectionRatio - 0) * d + newMin;
+      imageIndicator.style.opacity = newOpacity;
+    });
+  }
+
+  function registerImageObservers() {
+    const productImageParent = document.querySelector("#product_images");
+    const productImages = document.querySelectorAll(".product-image");
+    const length = 20;
+    const steps = Array.from({ length: length + 1 }).map((_, i) =>
+      i === 0 ? 0.0 : i / length,
+    );
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: steps,
+    };
+
+    productImages.forEach((image) => {
+      const observer = new IntersectionObserver(
+        intersectionCallback,
+        observerOptions,
+      );
+      observer.observe(image);
+      observers.push(observer);
+    });
+  }
+</script>
+{% endblock content %}

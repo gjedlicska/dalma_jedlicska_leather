@@ -12,7 +12,9 @@ class ProductQuery(Protocol):
 _products = [
     Product(
         id="foo1",
-        description="asdfb",
+        description="""A KLEIO közepes méretű hátitáska geometriai sziluettje izgalmas kontrasztot alkot a lágy ívekkel. A hosszan futó cipzáras záródás megkönnyíti a belső tér használatát, míg a bőrbetétek biztosítják, hogy a táska szélesen kinyíljon, miközben minden érték biztonságban marad.
+
+Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőrrel kasírozott. A nagy főrekeszen kívül egy belső lapos kis zsebbel és egy külső kis cipzáras zsebbel rendelkezik. Záródása fémcipzárral biztosított. Vállpántja állítható hosszúságú.  """,
         model=Model(
             name="capacitor",
             category="crossbody",
@@ -25,7 +27,22 @@ _products = [
                 "/static/images/jedlicska_dalma_collection -3.webp",
                 "/static/images/jedlicska_dalma_collection -3.webp",
                 "DUMMY THINGHY",
-            )
+            ),
+            ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+            ),
+            ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+            ),
+            ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+            ),
         ],
     ),
     Product(

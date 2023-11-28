@@ -1,33 +1,7 @@
 {% macro nav_link(target, display, menu_items) -%} {% set current_page =
 request.url.path == '/' + target -%}
 <div
-  _="
-  init set $menu_open to null
-  on touchstart log 'touch start' end
-  on click log 'clicked' end
-  on mouseenter or touchstart 
-    set $menu_open to '{{ display }}'
-    send enterNav to #cloud 
-    {% if menu_items %}
-      send enterNav(item_count: {{ menu_items | length }}) to #ribbon
-      then wait 0.3s
-      if not $menu_open exit end
-      show #menu{{ display }}
-      then set #menu{{ display }}'s *opacity to 1
-    {% endif %}
-  end
-  on mouseleave send leaveNav to #cloud 
-    set $menu_open to false
-    {% if menu_items %}
-      set #menu{{ display }}'s *opacity to 0
-      wait 0.3s
-      then if $menu_open is '{{ display }}' exit end
-      hide #menu{{ display }}
-    {% endif %} 
-    then if $menu_open exit end
-    send leaveNav to #ribbon
-  end
-  "
+  _=" init set :menu_open to null on touchstart log 'touch start' end on click log 'clicked' end on mouseenter or touchstart set :menu_open to '{{ display }}' send enterNav to #cloud {% if menu_items %} send enterNav(item_count: {{ menu_items | length }}) to #ribbon then wait 0.3s if not :menu_open exit end show #menu{{ display }} then set #menu{{ display }}'s *opacity to 1 {% endif %} end on mouseleave send leaveNav to #cloud set :menu_open to false {% if menu_items %} set #menu{{ display }}'s *opacity to 0 wait 0.3s then if :menu_open is '{{ display }}' exit end hide #menu{{ display }} {% endif %} then if :menu_open exit end send leaveNav to #ribbon end "
   class="flex flex-col space-y-1 pt-3 group relative"
 >
   <a href="/{{ target }}">{{ display }}</a>
@@ -51,24 +25,14 @@ request.url.path == '/' + target -%}
   </div>
 </div>
 {%- endmacro %}
-
 <div
   id="cloud"
-  _="on enterNav transition my opacity to 0.4
-     on leaveNav transition my opacity to 0"
+  _="on enterNav transition my opacity to 0.4 on leaveNav transition my opacity to 0"
   class="bg-white pointer-events-none absolute top-0 left-0 w-screen h-screen z-10 opacity-0"
 ></div>
 <div
   id="ribbon"
-  _="
-  init set my *height to 8rem
-  on enterNav(item_count)
-    set my *height to `${ 8 + (( item_count - 1 ) * 1.75 )}`rem
-  end
-  on leaveNav 
-    set my *height to 8rem
-  end
-  "
+  _="init set my *height to 8rem on enterNav(item_count) set my *height to `${ 8 + (( item_count - 1 ) * 1.75 )}`rem end on leaveNav set my *height to 8rem end "
   class="fixed w-full z-10 top-0 left-0 transition-[height] duration-300 bg-white"
 ></div>
 <nav
@@ -79,9 +43,9 @@ request.url.path == '/' + target -%}
     <a class="h-14" href="/">{% include "components/logo.html" %}</a>
   </div>
   <div class="flex items-center space-x-18 flex-grow">
-    {{ nav_link("products", _("products"), model_categories) }} {{
-    nav_link("stories", _("stories"), ["foo"]) }} {{ nav_link("info", _("info"))
-    }}
+    {{ nav_link("products", _("products") , model_categories) }} {{
+    nav_link("stories", _("stories") , ["foo"]) }} {{ nav_link("info", _("info")
+    ) }}
   </div>
   <div class="w-1/6 flex items-center justify-center">
     {% include "components/lang_selector.html" %}

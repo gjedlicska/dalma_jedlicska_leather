@@ -3,11 +3,7 @@ from pathlib import Path
 from typing import cast
 
 import arel
-from dalma_jedlicska_leather import services
-from dalma_jedlicska_leather.domain.images import ImageData
-from dalma_jedlicska_leather.domain.locale import Locale
-from dalma_jedlicska_leather.services.products import ProductHandler, ProductQuery
-from dalma_jedlicska_leather.repositories import products as product_repo
+from dalma_jedlicska_leather import services, domain, repositories
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -21,24 +17,32 @@ from starlette_babel.contrib.jinja import configure_jinja_env
 
 root_dir = Path(__file__).parent.parent
 
-supported_locales = [locale.value for locale in Locale]
+supported_locales = [locale.value for locale in domain.locale.Locale]
 shared_translator = get_translator()  # process global instance
 shared_translator.load_from_directories(
     [root_dir.joinpath("locales")]
 )  # one or multiple locale directories
 
-product_handler = ProductHandler(product_repo.get_products, product_repo.get_gap_images)
+product_handler = services.products.ProductHandler(
+    repositories.products.get_products, repositories.products.get_gap_images
+)
 
 ALL_CATEGORIES = "all"
 
 
-async def _get_global_context() -> dict[str, object]:
+async def create_context(
+    request: Request, local_context: dict[str, object] | None = None
+) -> dict[str, object]:
     model_categories = await product_handler.get_all_model_categories()
     model_categories.insert(0, ALL_CATEGORIES)
-    return {
+    global_context = {
+        "request": request,
         "supported_locales": supported_locales,
         "model_categories": model_categories,
     }
+    if local_context:
+        global_context |= local_context
+    return global_context
 
 
 app = FastAPI(
@@ -54,13 +58,16 @@ app = FastAPI(
                 "hyperion",
                 "hyperion.local",
                 "192.168.0.132",
+                "192.168.12.22",
             ],
         ),
     ]
 )
 templates = Jinja2Templates(directory="templates")
 configure_jinja_env(templates.env)
-templates.env.tests["image_data"] = lambda input: isinstance(input, ImageData)
+templates.env.tests["image_data"] = lambda input: isinstance(
+    input, domain.images.ImageData
+)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
@@ -69,12 +76,32 @@ app.add_middleware(GZipMiddleware)
 @app.get("/", response_class=HTMLResponse)
 async def home_page(request: Request) -> HTMLResponse:
     slideshow_images = services.get_slideshow_images()
-    context = {
-        "request": request,
-        "logo_active": True,
-        "slideshow_images": slideshow_images,
-    } | await _get_global_context()
+    context = await create_context(
+        request,
+        {
+            "logo_active": True,
+            "slideshow_images": slideshow_images,
+        },
+    )
     response = cast(HTMLResponse, templates.TemplateResponse("home.html", context))
+    return response
+
+
+@app.get("/products/{product_id}", response_class=HTMLResponse)
+async def single_product_page(request: Request, product_id: str) -> HTMLResponse:
+    product = await product_handler.get_product_by_id(product_id)
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    related_products = await product_handler.get_related_products(product.id)
+    context = await create_context(
+        request,
+        {
+            "product": product,
+            "related_products": related_products,
+            "active_category": product.model.category,
+        },
+    )
+    response = cast(HTMLResponse, templates.TemplateResponse("product.html", context))
     return response
 
 
@@ -84,22 +111,24 @@ async def products_page(request: Request, q: str | None = None) -> HTMLResponse:
     paginated_product_data = (
         await product_handler.get_paginated_translated_products_with_gap_images(
             # TODO: determine locale from request
-            ProductQuery(cursor=None, model=model, color=None),
-            Locale.HU,
+            services.products.ProductQuery(cursor=None, model=model, color=None),
+            domain.locale.Locale.HU,
         )
     )
-    context = {
-        "request": request,
-        "active_category": q if q else ALL_CATEGORIES,
-        "paginated_product_data": paginated_product_data,
-    } | await _get_global_context()
+    context = await create_context(
+        request,
+        {
+            "active_category": q if q else ALL_CATEGORIES,
+            "paginated_product_data": paginated_product_data,
+        },
+    )
     response = cast(HTMLResponse, templates.TemplateResponse("products.html", context))
     return response
 
 
 @app.get("/collections", response_class=HTMLResponse)
 async def collections_page(request: Request) -> HTMLResponse:
-    context = {"request": request} | await _get_global_context()
+    context = await create_context(request)
     response = cast(
         HTMLResponse, templates.TemplateResponse("collections.html", context)
     )
@@ -109,7 +138,7 @@ async def collections_page(request: Request) -> HTMLResponse:
 @app.get("/stories", response_class=HTMLResponse)
 async def stories_page(request: Request) -> HTMLResponse:
     stories = await services.get_stories()
-    context = {"request": request, "stories": stories} | await _get_global_context()
+    context = await create_context(request, {"stories": stories})
     response = cast(HTMLResponse, templates.TemplateResponse("stories.html", context))
     return response
 
@@ -119,14 +148,14 @@ async def story_page(story_id: str, request: Request) -> HTMLResponse:
     story = await services.get_story(story_id)
     if not story:
         raise HTTPException(status_code=404, detail="Item not found")
-    context = {"request": request, "story": story} | await _get_global_context()
+    context = await create_context(request, {"story": story})
     response = cast(HTMLResponse, templates.TemplateResponse("story.html", context))
     return response
 
 
 @app.get("/info", response_class=HTMLResponse)
 async def info_page(request: Request) -> HTMLResponse:
-    context = {"request": request} | await _get_global_context()
+    context = await create_context(request)
     response = cast(HTMLResponse, templates.TemplateResponse("info.html", context))
     return response
 
@@ -142,7 +171,7 @@ async def set_language(request: Request, lang: str) -> RedirectResponse:
 
 @app.exception_handler(404)
 async def not_found_page(request: Request, _) -> HTMLResponse:
-    context = {"request": request} | await _get_global_context()
+    context = await create_context(request)
     response = cast(HTMLResponse, templates.TemplateResponse("404.html", context))
     return response
 

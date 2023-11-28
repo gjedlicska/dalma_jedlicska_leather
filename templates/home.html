@@ -1,51 +1,48 @@
 {% extends "base.html" %}
 {% set full_height = true %}
 {% block title %}
-Dalma Jedlicska Leather
+  Dalma Jedlicska Leather
 {% endblock title %}
 {% block content %}
-{{ super() }}
-<div class="relative w-full flex-grow">
-
-  <div id="slider_images" class="relative h-full overflow-x-scroll scroll-smooth scrollbar-hide flex items-center -space-x-14 flex-grow">
-  {% for image in slideshow_images %}
-    <div 
-       id="{{ 'img_{}'.format(loop.index) }}"
-       class="relative"
-       style="height: {{ image.height_sixth / 6 * 100 }}%;
-         aspect-ratio: {{ image.ratio }};
-         z-index: {{ image.z_index }}"
-      >
-      <img class="absolute top-0 left-0 w-full h-full blur-sm"
-        _="on hide transition my opacity to 0 
-           // if the image is already in the cache, on load events do not fire
-           // so on blur init we check if the bigger pic is already loaded
-           // and trigger the fade from here
-           init if (next <img/>).complete
-              send show to the next <img/>
-              then trigger hide on me
-           end"
-        src="{{ image.low_res_source }}" alt="{{ image.description }}">
-      <img _="
-        on show transition my opacity to 1 then settle then send loaded(id:{{ loop.index }}) to #slider_parent
-        // if the image is loaded from remote source, trigger fadeout from here
-        on load[no detail] trigger show on me then send hide to the previous <img/>
-        " 
-          class="opacity-0 absolute top-0 left-0 w-full h-full" src="{{ image.source }}" alt="{{ image.description }}" loading="lazy">
+  {{ super() }}
+  <div class="relative w-full flex-grow">
+    <div id="slider_images"
+         class="relative h-full overflow-x-scroll scroll-smooth scrollbar-hide flex items-center -space-x-14 flex-grow">
+      {% for image in slideshow_images %}
+        <div id="{{ 'img_{}'.format(loop.index) }}"
+             class="relative"
+             style="height: {{ image.height_sixth / 6 * 100 }}%;
+                    aspect-ratio: {{ image.ratio }};
+                    z-index: {{ image.z_index }}">
+          <img class="absolute top-0 left-0 w-full h-full blur-sm" 
+               _="on hide transition my opacity to 0 
+                 // if the image is already in the cache, on load events do not fire 
+                 // so on blur init we check if the bigger pic is already loaded 
+                 // and trigger the fade from here 
+                 init if (next <img/>).complete send show to the next <img/>
+                 then trigger hide on me" 
+               src="{{ image.low_res_source }}" 
+               alt="{{ image.description }}">
+          <img _="on show transition my opacity to 1 
+                  then settle then send loaded(id:{{ loop.index }}) to #slider_parent 
+                  // if the image is loaded from remote source, trigger fadeout from here 
+                  on load[no detail] trigger show on me then send hide to the previous <img/>"
+              class="opacity-0 absolute top-0 left-0 w-full h-full"
+              src="{{ image.source }}" 
+              alt="{{ image.description }}" 
+              loading="lazy">
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  </div>
-  <div 
-    class="absolute flex align-middle space-x-3 top-0 right-0 h-8 pb-1 pr-3 items-center z-50 bg-white" 
-    _="init set $current to 0 set $paused to true end
-       on pause_play set $paused to true then send pause to .player end
-       on start_play set $paused to false then trigger start(delay:0s) on me then send play to .player end
-       on loaded[id == 1] trigger start(delay: 3s) on me end
-       on start(delay) set $paused to false then send play to .player then cycle_right(delay) end
-       on stop log 'stoped'
-    "
-    id="slider_parent">
-    <script type="text/hyperscript">
+    <div class="absolute flex align-middle space-x-3 top-0 right-0 h-8 pb-1 pr-3 items-center z-50 bg-white"
+             _="init set :current to 0 set :paused to true end 
+                on pause_play set :paused to true then send pause to .player end 
+                on start_play set :paused to false then trigger start(delay:0s) on me then send play to .player end 
+                on loaded[id == 1] trigger start(delay: 3s) on me end 
+                on start(delay) set :paused to false then send play to .player then cycle_right(delay) end 
+                on stop log 'stoped' "
+             id="slider_parent">
+      <script type="text/hyperscript">
         def cycle_right(delay)
             // make sure to reset to the start
             move_to_current()
@@ -53,70 +50,50 @@ Dalma Jedlicska Leather
             repeat until event stop
                 // if slider images is not defiend, we cant cycle
                 break unless #slider_images
-                move_right() unless $paused
+                move_right() unless :paused
                 wait 4s
             end
         end
         def move_left()
-            if $current is 0
-                set $current to #slider_images.children.length - 1
+            if :current is 0
+                set :current to #slider_images.children.length - 1
             else
-                decrement $current
+                decrement :current
             end
             move_to_current()
         end
         def move_right()
-            if $current + 1 is really equal to #slider_images.children.length
-                set $current to 0
+            if :current + 1 is really equal to #slider_images.children.length
+                set :current to 0
             else
-                increment $current
+                increment :current
             end
             move_to_current()
         end
         def move_to_current()
-            set current_id to #slider_images.children[$current].id
+            set current_id to #slider_images.children[:current].id
             go to the left of #{current_id} smoothly
         catch e
             log `caught this ${e}` unless no e
         end
-    </script>
-    <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent">
-      <i class="fa fa-angle-left" aria-hidden="true"></i>
-    </button>
-    <div class="w-4 flex justify-center">
-      <button class="player" style="display:none" _="
-        on click send pause_play to #slider_parent
-        on play show me
-        on pause hide me
-        ">
-        <i class="fa fa-pause" aria-hidden="true"></i>
+      </script>
+      <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
       </button>
-      <button class="player"_="
-        on click send start_play to #slider_parent
-        on play hide me
-        on pause show me
-        ">
-        <i class="fa fa-play" aria-hidden="true"></i>
+      <div class="w-4 flex justify-center">
+        <button class="player"
+                style="display:none"
+                _=" on click send pause_play to #slider_parent on play show me on pause hide me ">
+          <i class="fa fa-pause" aria-hidden="true"></i>
+        </button>
+        <button class="player"
+                _=" on click send start_play to #slider_parent on play hide me on pause show me ">
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </button>
+      </div>
+      <button _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
       </button>
     </div>
-    <button _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent">
-      <i class="fa fa-angle-right" aria-hidden="true"></i>
-    </button>
   </div>
-</div>
-<style>
-  /* For Webkit-based browsers (Chrome, Safari and Opera) */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* For IE, Edge and Firefox */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-  }
-</style>
 {% endblock content %}
-
