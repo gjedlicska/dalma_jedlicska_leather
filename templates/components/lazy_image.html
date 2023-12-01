@@ -1,0 +1,30 @@
+{% macro lazy_image(source, low_res_source, alt, id, notify_target=none,
+intersect_reveal=true) -%}
+<div
+  _="{% if intersect_reveal %}on intersection(intersecting) having threshold 0.2
+       log 'intersection'
+       if intersecting transition *opacity to 1 else transition opacity to 0
+     {% endif %}"
+  class="relative w-full h-auto"
+>
+  <img
+    _="init if my complete is false send show to the next <div/> then set my *opacity to 0 end
+       on load[no detail] transition my *opacity to 1 
+          then settle 
+          {% if notify_target is not none %}then send loaded(id:{{ id }}) to {{ notify_target }}{% endif %}
+          then send hide to the next <div/>"
+    class="absolute top-0 left-0 w-full"
+    src="{{ source }}"
+    alt="{{ alt }}"
+    loading="lazy"
+  />
+  <div
+    _="on hide transition my *opacity to 0 
+          on show transition my *opacity to 1"
+    class="relative opacity-0 z-10 w-full"
+  >
+    <img class="w-full" src="{{ low_res_source }}" alt="{{ alt }}" />
+    <div class="absolute top-0 w-full h-full backdrop-blur-sm"></div>
+  </div>
+</div>
+{%- endmacro %}
