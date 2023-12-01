@@ -20,11 +20,11 @@
       {% endfor %}
     </div>
     <div class="absolute flex align-middle space-x-3 top-0 right-0 h-8 pb-1 pr-3 items-center z-50 bg-white"
-             _="init set :current to 0 set :paused to true end 
-                on pause_play set :paused to true then send pause to .player end 
-                on start_play set :paused to false then trigger start(delay:0s) on me then send play to .player end 
+             _="init set :current to 0 set $paused to true end 
+                on pause_play set $paused to true then send pause to .player end 
+                on start_play set $paused to false then trigger start(delay:0s) on me then send play to .player end 
                 on loaded[id == 1] trigger start(delay: 3s) on me end 
-                on start(delay) set :paused to false then send play to .player then cycle_right(delay) end 
+                on start(delay) set $paused to false then send play to .player then cycle_right(delay) end 
                 on stop log 'stoped' "
              id="slider_parent">
       <script type="text/hyperscript">
@@ -35,7 +35,7 @@
             repeat until event stop
                 // if slider images is not defiend, we cant cycle
                 break unless #slider_images
-                move_right() unless :paused
+                move_right() unless $paused
                 wait 4s
             end
         end
@@ -59,7 +59,6 @@
             set current_id to #slider_images.children[:current].id
             go to the left of #{current_id} smoothly
         catch e
-            log `caught this ${e}` unless no e
         end
       </script>
       <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent">
