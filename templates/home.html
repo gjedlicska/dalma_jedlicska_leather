@@ -3,6 +3,7 @@
 {% block title %}
   Dalma Jedlicska Leather
 {% endblock title %}
+{% from 'components/lazy_image.html' import lazy_image %}
 {% block content %}
   {{ super() }}
   <div class="relative w-full flex-grow">
@@ -14,24 +15,7 @@
              style="height: {{ image.height_sixth / 6 * 100 }}%;
                     aspect-ratio: {{ image.ratio }};
                     z-index: {{ image.z_index }}">
-          <img _="init if my complete is false send show to .blur-provider-{{loop.index}} then set my *opacity to 0 end
-                  on load[no detail] transition my *opacity to 1 
-                     then settle 
-                     then send loaded(id:{{ loop.index }}) to #slider_parent 
-                     then send hide to .blur-provider-{{loop.index}}"
-              class="absolute top-0 left-0 w-full h-full"
-              src="{{ image.source }}" 
-              alt="{{ image.description }}" 
-              loading="lazy">
-          <img class="blur-provider-{{loop.index}} absolute top-0 left-0 opacity-0 w-full h-full" 
-               _="on hide transition my *opacity to 0 
-                  on show transition my *opacity to 1"
-               src="{{ image.low_res_source }}" 
-               alt="{{ image.description }}">
-          <div 
-            _="on hide transition my *opacity to 0 
-               on show transition my *opacity to 1"
-            class="blur-provider-{{loop.index}} absoulte top-0 left-0 opacity-0 w-full h-full backdrop-blur-sm"></div>
+          {{ lazy_image(image.source, image.low_res_source, image.description, loop.index, notify_target='#slider_parent', intersect_reveal=false) }}
         </div>
       {% endfor %}
     </div>
