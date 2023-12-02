@@ -32,6 +32,11 @@ module.exports = {
       },
       fontSize: {
         nav: "0.6875rem",
+        // "small-base":
+      },
+      cursor: {
+        left: "url(/static/left_arrow.svg), pointer",
+        right: "url(/static/right_arrow.svg), pointer",
       },
     },
   },

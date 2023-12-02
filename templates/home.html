@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     </div>
-    <div class="absolute flex align-middle space-x-3 top-0 right-0 h-8 pb-1 pr-3 items-center z-50 bg-white"
+    <div class="absolute top-0 left-0 flex w-full h-full items-end justify-between z-50"
              _="init set :current to 0 set $paused to true end 
                 on pause_play set $paused to true then send pause to .player end 
                 on start_play set $paused to false then trigger start(delay:0s) on me then send play to .player end 
@@ -61,10 +61,8 @@
         catch e
         end
       </script>
-      <button _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
-      </button>
-      <div class="w-4 flex justify-center">
+      <button class="w-[15%] h-full cursor-left" _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"></button>
+        <div class="flex justify-center">
         <button class="player"
                 style="display:none"
                 _=" on click send pause_play to #slider_parent on play show me on pause hide me ">
@@ -74,10 +72,8 @@
                 _=" on click send start_play to #slider_parent on play hide me on pause show me ">
           <i class="fa fa-play" aria-hidden="true"></i>
         </button>
-      </div>
-      <button _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-      </button>
+        </div>
+      <button class="w-[15%] h-full cursor-right" _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"></button>
     </div>
   </div>
 {% endblock content %}
