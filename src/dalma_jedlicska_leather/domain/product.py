@@ -17,5 +17,6 @@ class Product:
     description: str
     model: Model
     color: str
+    cover_image: ImageData
     material_description: str
     display_images: List[ImageData]

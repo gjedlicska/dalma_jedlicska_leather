@@ -10,6 +10,42 @@ class ProductQuery(Protocol):
 
 
 _products = [
+    Product("kleio-bp-brown-01",
+        description="""A KLEIO közepes méretű hátitáska geometriai sziluettje izgalmas kontrasztot alkot a lágy ívekkel.
+A hosszan futó cipzáras záródás megkönnyíti a belső tér használatát, míg a bőrbetétek biztosítják, hogy a táska szélesen kinyíljon, miközben minden érték biztonságban marad.
+
+Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőrrel kasírozott. A nagy főrekeszen kívül egy belső lapos kis zsebbel és egy külső kis cipzáras zsebbel rendelkezik. Záródása fémcipzárral biztosított. Vállpántja állítható hosszúságú.""",
+        model=Model(name="kleio", category="hátitáska", prices=[Price(Locale.HU, 110000)]),
+        color="barna",
+        cover_image=ImageData(
+            "/static/images/dj_webshop-2.webp",
+            "/static/images/dj_webshop-2_blur.webp",
+            "kleio barna hátizsák",
+        ),
+        material_description="ez csak kamu itt, kell ez?",
+        display_images=[
+            ImageData(
+                "/static/images/dj_webshop-1.webp",
+                "/static/images/dj_webshop-1_blur.webp",
+                "kleio barna hátizsák",
+            ),
+            ImageData(
+                "/static/images/dj_webshop-3.webp",
+                "/static/images/dj_webshop-3_blur.webp",
+                "kleio barna hátizsák",
+            ),
+            ImageData(
+                "/static/images/dj_webshop-4.webp",
+                "/static/images/dj_webshop-4_blur.webp",
+                "kleio barna hátizsák",
+            ),
+            ImageData(
+                "/static/images/dj_webshop-5.webp",
+                "/static/images/dj_webshop-5_blur.webp",
+                "kleio barna hátizsák",
+            ),
+        ],
+    ),
     Product(
         id="foo1",
         description="""A KLEIO közepes méretű hátitáska geometriai sziluettje izgalmas kontrasztot alkot a lágy ívekkel. A hosszan futó cipzáras záródás megkönnyíti a belső tér használatát, míg a bőrbetétek biztosítják, hogy a táska szélesen kinyíljon, miközben minden érték biztonságban marad.
@@ -19,6 +55,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
             name="capacitor",
             category="crossbody",
             prices=[Price(Locale.HU, 90000)],
+        ),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
         ),
         color="blue",
         material_description="glitter glitter glitter",
@@ -49,6 +90,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -63,6 +109,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -77,6 +128,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "clutch", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -91,6 +147,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -105,6 +166,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -119,6 +185,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -133,6 +204,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[
@@ -147,6 +223,11 @@ Válogatott olasz marhabőrből készül, belseje teljes felületen sertés bőr
         id="bar2",
         description="asdfb",
         model=Model("akela", "crossbody", [Price(Locale.HU, 90000)]),
+        cover_image=ImageData(
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "/static/images/jedlicska_dalma_collection -3.webp",
+                "DUMMY THINGHY",
+        ),
         color="grey",
         material_description="glitter glitter glitter",
         display_images=[

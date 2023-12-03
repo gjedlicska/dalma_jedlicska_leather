@@ -30,7 +30,8 @@
 </p>
 {%- endmacro %} {% extends "base.html" %} {% block title %} Dalma's products
 {%endblock title%} {% block content %} {% from "components/price_display.html"
-import price_display %}
+import price_display %} {% from "components/lazy_image.html" import lazy_image
+%}
 <div class="mx-1/6">
   <div class="ml-64 pb-8 sticky top-0">
     {% include "components/category_selector.html" %}
@@ -43,15 +44,17 @@ import price_display %}
           _="on scroll_to(id) scrollTo({top: id.offsetTop - me.offsetTop, behavior: 'smooth'}) on me
             init registerImageObservers() 
            "
-          class="snap-y snap-mandatory snap-center aspect-[6/7] overflow-y-scroll scroll-smooth space-y-6 scrollbar-hide"
+          class="w-full snap-y snap-mandatory snap-center aspect-[6/7] overflow-y-scroll scroll-smooth space-y-6 scrollbar-hide"
         >
           {% for image in product.display_images %}
-          <img
+          <div
             id="product_image_{{ loop.index }}"
-            class="w-full h-full snap-center object-cover product-image"
-            alt="{{ image.description }}"
-            src="{{ image.source }}"
-          />
+            class="w-full h-full snap-center product-image"
+          >
+            {{ lazy_image(image.source, image.low_res_source, image.description,
+            loop.index, intersect_reveal=true)}}
+          </div>
+
           {% endfor %}
         </div>
         <div

@@ -5,9 +5,9 @@
 {% block content %}
   <div class="grid grid-cols-2 gap-x-5 gap-y-10 mx-1/6">
     {% for story in stories %}
-      <a href="/stories/{{ story.slug }}"
+      <a hx-boost=true href="/stories/{{ story.slug }}"
          class="group ease-in-out flex flex-col space-y-5 items-center">
-        <div class="bg-blue-100 relative w-full aspect-[7/6]">
+        <div class="relative w-full aspect-[7/6]">
           <div class="absolute">
             <img class="object-cover"
                  src="{{ story.hover_image.source }}"

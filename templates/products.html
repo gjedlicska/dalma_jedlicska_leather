@@ -3,6 +3,7 @@
   Dalma's products
 {% endblock title %}
 {% from "components/price_display.html" import price_display %}
+{% from "components/lazy_image.html" import lazy_image %}
 {% block content %}
   <div class="mx-1/6">
     <div class="ml-64">
@@ -11,18 +12,17 @@
     <div class="grid grid-cols-3 gap-x-3 gap-y-14 pt-18 pb-44">
       {% for product in paginated_product_data.items %}
         {% if product is image_data %}
-          <img class="col-span-3 px-36 object-cover transition-shadow "
-               alt="{{ product.description }}"
-               src="{{ product.source }}" />
+          <div class="col-span-3 px-36">
+            {{ lazy_image(product.source, product.low_res_source, product.description, product.description, intersect_reveal=true) }}
+          </div>
         {% else %}
           <a href="/products/{{ product.product_data.id }}"
+             hx-boost=true
              id="{{ product.product_data.id }}"
              class="group flex flex-col">
             <div class="relative aspect-[1/1.5] transition-shadow duration-500 group-hover:shadow-md">
-              <img class="absolute h-full w-full object-cover transition-shadow "
-                   alt="{{ product.display_images[0].description }}"
-                   src="{{ product.display_images[0].source }}" />
-              <div class="absolute h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100" />
+              {{ lazy_image(product.product_data.cover_image.source, product.product_data.cover_image.low_res_source, product.product_data.cover_image.description, product.product_data.cover_image.description, intersect_reveal=true) }}
+              <div class="absolute top-0 h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100" />
             </div>
           </div>
           <div class="pt-6 font-body uppercase group-hover:text-sand-hover transition-colors ease-in duration-300">
