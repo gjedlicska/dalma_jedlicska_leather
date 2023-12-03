@@ -538,6 +538,10 @@ video {
   pointer-events: none;
 }
 
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
 .fixed {
   position: fixed;
 }
@@ -722,12 +726,20 @@ video {
   cursor: url(/static/right_arrow.svg), pointer;
 }
 
+.snap-x {
+  scroll-snap-type: x var(--tw-scroll-snap-strictness);
+}
+
 .snap-y {
   scroll-snap-type: y var(--tw-scroll-snap-strictness);
 }
 
 .snap-mandatory {
   --tw-scroll-snap-strictness: mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
 }
 
 .snap-center {

@@ -8,10 +8,10 @@
   {{ super() }}
   <div class="relative w-full flex-grow">
     <div id="slider_images"
-         class="relative h-full overflow-x-scroll scroll-smooth scrollbar-hide flex items-center -space-x-14 flex-grow">
+         class="relative h-full overflow-x-scroll scroll-smooth snap-x scrollbar-hide flex items-center -space-x-14 flex-grow">
       {% for image in slideshow_images %}
-        <div id="{{ 'img_{}'.format(loop.index) }}"
-             class="relative"
+      <div id="{{ 'img_{}'.format(loop.index) }}"
+           class="relative snap-start"
              style="height: {{ image.height_sixth / 6 * 100 }}%;
                     aspect-ratio: {{ image.ratio }};
                     z-index: {{ image.z_index }}">
@@ -19,7 +19,7 @@
         </div>
       {% endfor %}
     </div>
-    <div class="absolute top-0 left-0 flex w-full h-full items-end justify-between z-50"
+    <div class="absolute top-0 left-0 pointer-events-none flex w-full h-full items-end justify-between z-50"
              _="init set :current to 0 set $paused to true end 
                 on pause_play set $paused to true then send pause to .player end 
                 on start_play set $paused to false then trigger start(delay:0s) on me then send play to .player end 
@@ -61,8 +61,8 @@
         catch e
         end
       </script>
-      <button class="w-[15%] h-full cursor-left" _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"></button>
-        <div class="flex justify-center">
+      <button class="w-[15%] h-full cursor-left pointer-events-auto" _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"></button>
+        <div class="flex justify-center pointer-events-auto">
         <button class="player"
                 style="display:none"
                 _=" on click send pause_play to #slider_parent on play show me on pause hide me ">
@@ -73,7 +73,7 @@
           <i class="fa fa-play" aria-hidden="true"></i>
         </button>
         </div>
-      <button class="w-[15%] h-full cursor-right" _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"></button>
+      <button class="w-[15%] h-full cursor-right pointer-events-auto" _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"></button>
     </div>
   </div>
 {% endblock content %}
