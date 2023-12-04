@@ -2,6 +2,7 @@
 {% block title %}
   Dalma's stories
 {% endblock title %}
+{% from "components/lazy_image.html" import lazy_image %}
 {% block content %}
   <div class="grid grid-cols-2 gap-x-5 gap-y-10 mx-1/6">
     {% for story in stories %}
@@ -9,19 +10,15 @@
          class="group ease-in-out flex flex-col space-y-5 items-center">
         <div class="relative w-full aspect-[7/6]">
           <div class="absolute">
-            <img class="object-cover"
-                 src="{{ story.hover_image.source }}"
-                 alt="{{ story.hover_image.description }}" />
+          {{ lazy_image(story.hover_image.source, story.hover_image.low_res_source, story.hover_image.description, story.hover_image.description, intersect_reveal=false)}}
           </div>
-          <div class="absolute">
-            <img class="object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0"
-                 src="{{ story.cover_image.source }}"
-                 alt="{{ story.cover_image.description }}" />
+          <div class="absolute transition-opacity duration-500 opacity-100 group-hover:opacity-0">
+          {{ lazy_image(story.cover_image.source, story.cover_image.low_res_source, story.cover_image.description, story.cover_image.description, intersect_reveal=false)}}
           </div>
         </div>
         <div class="group-hover:text-sand-hover transition-all flex flex-col items-center pt-5 space-y-3">
-          <p class="font-body uppercase text-sm tracking-extra-wide">{{ story.name }}</p>
-          <p class="font-body uppercase text-sm tracking-wider">{{ story.date.year }}</p>
+          <p class="uppercase text-sm tracking-extra-wide">{{ story.name }}</p>
+          <p class="uppercase text-sm tracking-wider">{{ story.date.year }}</p>
         </div>
         <svg class="h-2 " viewBox="0 0 10 10">
           <circle cx="5" cy="5" r="3" class="fill-black transition-all group-hover:fill-sand-hover" />

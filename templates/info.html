@@ -4,13 +4,13 @@
 {% endblock title %}
 {% from 'components/lazy_image.html' import lazy_image %}
 {% macro block_content(header, paragraph) -%}
-  <h2 class="font-body text-lg uppercase tracking-ultra-wide">{{ header }}</h2>
-  <p class="font-body text-base uppercase">{{ paragraph }}</p>
+  <h2 class="text-lg uppercase tracking-ultra-wide">{{ header }}</h2>
+  <p class="text-base uppercase">{{ paragraph }}</p>
 {%- endmacro %}
 {% block content %}
   <div class="flex flex-col items-center pt-24 pb-30 space-y-18 mx-1/6">
     <div class="flex flex-col items-center space-y-9">
-      <h1 class="font-body text-base uppercase tracking-ultra-wide">my philosophy</h1>
+      <h1 class="text-base uppercase tracking-ultra-wide">my philosophy</h1>
       <svg class="h-2 " viewBox="0 0 10 10">
         <circle cx="5" cy="5" r="3" class="fill-black" />
       </svg>
@@ -32,8 +32,8 @@
                   TATUR, IPID UT AS ANT LA SOLOR RE, QUAM EUM QUIBU-
                 SA PREHENDUS CON NONECUPTATUS RECATUM SIMOLOR' %}
         {{ block_content('about me', paragraph) }}
-        <!-- <h2 class="font-body text-lg uppercase tracking-ultra-wide">about me</h2>
-        <p class="font-body text-base uppercase"></p> -->
+        <!-- <h2 class="text-lg uppercase tracking-ultra-wide">about me</h2>
+        <p class="text-base uppercase"></p> -->
       </div>
       <div>{{ lazy_image('/static/images/dalma-jedlicska-leather-7.webp', '/static/images/dalma-jedlicska-leather-7_blur.webp', 'dalmacs', 'profile') }}</div>
       <div>{{ lazy_image('/static/images/jedlicska_dalma_leather_behind_the_scenes-35.webp', '/static/images/jedlicska_dalma_leather_behind_the_scenes-35_blur.webp', 'hammering', 'hammering') }}</div>

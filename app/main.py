@@ -35,10 +35,12 @@ async def create_context(
 ) -> dict[str, object]:
     model_categories = await product_handler.get_all_model_categories()
     model_categories.insert(0, ALL_CATEGORIES)
+    story_slugs = [ s.slug for s in await services.get_stories()]
     global_context = {
         "request": request,
         "supported_locales": supported_locales,
         "model_categories": model_categories,
+        "story_slugs": story_slugs,
     }
     if local_context:
         global_context |= local_context

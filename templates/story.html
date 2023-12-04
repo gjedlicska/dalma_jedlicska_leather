@@ -2,19 +2,23 @@
 {% block title %}
   {{ story.name }}
 {% endblock title %}
-{% from 'components/fade_image.html' import fade_image %}
+{% from "components/lazy_image.html" import lazy_image %}
 {% block content %}
   <div class="flex flex-col items-center space-y-18 pt-24 pb-10 mx-1/6">
     <div class="flex flex-col items-center space-y-9">
-      <h1 class="font-body text-base uppercase tracking-ultra-wide">{{ story.name }}</h1>
-      <h2 class="font-body text-sm uppercase tracking-very-wide">{{ story.date.year }}</h2>
+      <h1 class="text-base uppercase tracking-ultra-wide">{{ story.name }}</h1>
+      <h2 class="text-sm uppercase tracking-very-wide">{{ story.date.year }}</h2>
       <svg class="h-2 " viewBox="0 0 10 10">
         <circle cx="5" cy="5" r="3" class="fill-black" />
       </svg>
     </div>
     <div class="grid grid-cols-2 gap-x-7 gap-y-20">
       {% for image in story.images %}
-        <div class="{% if image.full_width %}col-span-2{% endif %}">{{ fade_image(image.source, image.description) }}</div>
+        <div class="{% if image.full_width %}col-span-2{% endif %} w-full flex justify-center">
+          <div style="width: {{image.width_percentage}}%" class="p-{{image.padding}} flex items-center">
+            {{ lazy_image(image.source, image.low_res_source, image.description, image.description, intersect_reveal=true) }}
+          </div>
+        </div>
       {% endfor %}
     </div>
     {% include "components/go_top.html" %}

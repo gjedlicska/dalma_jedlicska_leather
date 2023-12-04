@@ -44,20 +44,20 @@ request.url.path == '/' + target -%}
 ></div>
 <div
   id="ribbon"
-  _="init set my *height to 8rem on enterNav(item_count) set my *height to `${ 8 + (( item_count - 1 ) * 1.75 )}`rem end on leaveNav set my *height to 8rem end "
+  _="init set my *height to 8rem on enterNav(item_count) set my *height to `${ 8 + (( item_count - 1 ) * 2)}`rem end on leaveNav set my *height to 8rem end "
   class="fixed w-full z-10 top-0 left-0 transition-[height] duration-300 bg-white"
 ></div>
 <nav
   hx-boost="true"
-  class="sticky top-0 z-10 bg-white flex h-40 font-body text-nav tracking-widest uppercase"
+  class="sticky top-0 z-10 bg-white flex h-40 text-nav tracking-widest uppercase"
 >
   <div class="w-1/6 flex items-center justify-center">
     <a class="h-14" href="/">{% include "components/logo.html" %}</a>
   </div>
   <div class="flex items-center space-x-18 flex-grow">
     {{ nav_link("products", _("products") , model_categories) }} {{
-    nav_link("stories", _("stories") , ["foo"]) }} {{ nav_link("info", _("info")
-    ) }}
+    nav_link("stories", _("stories") , story_slugs) }} {{ nav_link("info",
+    _("info") ) }}
   </div>
   <div class="w-1/6 flex items-center justify-center">
     {% include "components/lang_selector.html" %}

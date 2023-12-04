@@ -8,6 +8,8 @@ from dalma_jedlicska_leather.domain.images import ImageData
 @define
 class StoryImage(ImageData):
     full_width: bool = False
+    width_percentage: float = 100
+    padding: int = 0
 
 
 @define
@@ -40,7 +42,7 @@ stories = [
                 "/static/images/jedlicska_dalma_film_look_porcelain-51.webp",
                 "/static/images/jedlicska_dalma_film_look_porcelain-51.webp",
                 "porcelain",
-                True,
+                full_width=True,
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-21.webp",
@@ -53,10 +55,75 @@ stories = [
                 "porcelain",
             ),
             StoryImage(
-                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
-                "/static/images/jedlicska_dalma_film_look_brown-64.webp",
+
+                "/static/images/jedlicska_dalma_film_look_porcelain-54.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-54.jpg",
                 "brown",
-                True,
+                full_width=True,
+                width_percentage=50,
+                padding=14,
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-32.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-32.jpg",
+                "porcelain",
+                full_width=True,
+                width_percentage=70,
+                padding=14,
+            ),
+            # some fake gap creator images
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "porcelain",
+                full_width=True,
+                width_percentage=0
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "porcelain",
+                full_width=True,
+                width_percentage=0
+            ),
+            # hack above
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-16.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-16.jpg",
+                "porcelain",
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "porcelain",
+                width_percentage=75
+            ),
+            # some fake gap creator images
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "porcelain",
+                full_width=True,
+                width_percentage=0
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
+                "porcelain",
+                full_width=True,
+                width_percentage=0
+            ),
+            # hack above
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-3.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-3.jpg",
+                "porcelain",
+                width_percentage=75
+            ),
+            StoryImage(
+                "/static/images/jedlicska_dalma_film_look_porcelain-61.jpg",
+                "/static/images/jedlicska_dalma_film_look_porcelain-61.jpg",
+                "porcelain",
             ),
         ],
     ),

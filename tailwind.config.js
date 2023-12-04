@@ -1,9 +1,12 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["../templates/**/*.html"],
   theme: {
     extend: {
       fontFamily: {
+        sans: ["Cabin", ...defaultTheme.fontFamily.sans],
         body: "Cabin",
         serif: "Playfair",
       },
@@ -41,4 +44,5 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: ["p-14"],
 };
