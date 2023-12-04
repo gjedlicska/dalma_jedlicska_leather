@@ -1,5 +1,5 @@
-{% macro nav_link(target, display, menu_items) -%} {% set current_page =
-request.url.path == '/' + target -%}
+{% macro nav_link(target, display, menu_items, menu_item_query=false) -%} {% set
+current_page = request.url.path == '/' + target -%}
 <div
   _="init set $menu_open to null
      on touchstart log 'touch start' end
@@ -30,7 +30,9 @@ request.url.path == '/' + target -%}
     class="absolute top-9 pt-2 flex flex-col space-y-2 transition-opacity duration-300"
   >
     {% for menu_item in menu_items %}
-    <a class="whitespace-nowrap" href="/{{ target }}?q={{ menu_item }}"
+    <a
+      class="whitespace-nowrap"
+      href="/{{ target }}{% if menu_item_query %}?q={% else %}/{% endif %}{{ menu_item }}"
       >{{ menu_item }}</a
     >
     {% endfor %}
@@ -55,9 +57,9 @@ request.url.path == '/' + target -%}
     <a class="h-14" href="/">{% include "components/logo.html" %}</a>
   </div>
   <div class="flex items-center space-x-18 flex-grow">
-    {{ nav_link("products", _("products") , model_categories) }} {{
-    nav_link("stories", _("stories") , story_slugs) }} {{ nav_link("info",
-    _("info") ) }}
+    {{ nav_link("products", _("products") , model_categories,
+    menu_item_query=true) }} {{ nav_link("stories", _("stories") , story_slugs)
+    }} {{ nav_link("info", _("info") ) }}
   </div>
   <div class="w-1/6 flex items-center justify-center">
     {% include "components/lang_selector.html" %}
