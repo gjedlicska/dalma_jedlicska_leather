@@ -1,19 +1,14 @@
-<!-- <select _="on change go to url `/set_lang/?lang=${my.value}`">
-  {% for lang in supported_locales %}
-    <option value="{{ lang }}" {% if request.cookies.get("language", None) == lang %}selected=true{% endif %}>
-      {{ lang.upper()}}
-    </option>
-  {% endfor %}
-</select>
--->
-{% macro lang_selector(language) -%}
-  {% set active_language = request.cookies.get('language') == language -%}
-{%- endmacro %}
-<div class="flex space-x-1 text-nav tracking-widest uppercase">
-  {% for lang in supported_locales %}
-    {% set active_language = request.cookies.get('language') == lang -%}
-    <a class="{% if active_language %}font-bold{% endif %}"
-       href="/set_lang/?lang={{ lang }}">{{ lang }}</a>
-    {% if not loop.last %}<p>/</p>{% endif %}
-  {% endfor %}
+{% macro lang_selector(language) -%} {% set active_language =
+request.cookies.get('language') == language -%} {%- endmacro %}
+<div class="opacity-0 flex space-x-1 text-nav tracking-widest uppercase">
+  {% for lang in supported_locales %} {% set active_language =
+  request.cookies.get('language') == lang -%}
+  <a
+    class="{% if active_language %}font-bold{% endif %}"
+    href="/set_lang/?lang={{ lang }}"
+    >{{ lang }}</a
+  >
+  {% if not loop.last %}
+  <p>/</p>
+  {% endif %} {% endfor %}
 </div>

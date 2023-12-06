@@ -1,0 +1,45 @@
+{% from "components/main_button.html" import main_button_get %} {% from
+"components/price_display.html" import price_display %} {% macro
+toggle_text(heading, content) -%}
+<button
+  _="init set :open to false 
+               on click if :open 
+                 trigger close on me 
+               else 
+                 trigger open on me
+               end 
+               on open send close to .toggle_button then settle then set :open to true then send open to the next <p/>
+               on close set :open to false then send close to the next <p/>
+               "
+  class="toggle_button flex space-x-5 items-center"
+>
+  <p class="pb-[0.23rem]">+</p>
+  <p class="uppercase text-xs tracking-wide-title">{{ _(heading) }}</p>
+</button>
+<p
+  style="max-height: 0px"
+  _="on close transition my *max-height to 0px using 'all 0.3s ease-out' 
+     on open go to the bottom of me +600px smoothly then transition my *max-height to 600px using 'all 0.3s ease-out'"
+  class="ease-out overflow-hidden my-2 text-xs tracking-wider leading-5 whitespace-pre-wrap"
+>
+  {{ _(content) }}
+</p>
+{%- endmacro %}
+
+<p class="uppercase text-xl tracking-very-wide font-medium">
+  {{ product.model.category }}
+</p>
+{{ price_display(product.model.prices[0]) }}
+<p class="text-xs tracking-wider leading-5 whitespace-pre-wrap">
+  {{ product.model.description }}
+</p>
+<div>
+  {{ toggle_text("details", product.model.details + "\n\n" + _("Anyag") + "\n" +
+  product.material_description) }} {{ toggle_text("care", "carefully care about
+  this") }}
+</div>
+<!-- <p> -->
+<!--   A termék megrendeléséséhez irj egy emailt az info@jedlicska.com email cimre -->
+<!-- </p> -->
+{{ main_button_get("order", "/products/{}/summary".format(product.id),
+"#product_panel", push_url=true)}}

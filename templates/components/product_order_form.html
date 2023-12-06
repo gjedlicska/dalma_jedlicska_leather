@@ -1,0 +1,62 @@
+{% from "components/main_button.html" import main_button_get, back_button_get %}
+{{ back_button_get("back", "/products/{}/summary".format(product.id),
+"#product_panel", push_url=true)}}
+<form
+  class="flex flex-col h-full"
+  action="/products/{{product.id}}/order"
+  method="post"
+  hx-boost="true"
+>
+  <p>kapcsolattartasi adatok</p>
+  <input
+    type="email"
+    required="true"
+    name="message"
+    placeholder="{{ _('enter_your_email')}}"
+  />
+  <p>szamlazasi adatok</p>
+  <div class="flex">
+    <input
+      required="true"
+      name="Vezeteknev"
+      placeholder="vezeteknev"
+      type="text"
+    />
+    <input
+      required="true"
+      name="Keresztnev"
+      placeholder="keresztnev"
+      type="text"
+    />
+  </div>
+  <div>
+    <input
+      required="true"
+      name="iranyitoszam"
+      placeholder="iranyitoszam"
+      type="text"
+    />
+    <input
+      required="true"
+      name="telepules"
+      placeholder="telepules"
+      type="text"
+    />
+    <input
+      required="true"
+      name="utca"
+      placeholder="utca, hazszam"
+      type="text"
+    />
+    <input
+      required="false"
+      name="telefonszam"
+      placeholder="+36/30-123123"
+      type="text"
+    />
+  </div>
+
+  {{ main_button_get("finalize_order",
+  "/products/{}/summary".format(product.id), "#product_panel",
+  hx_button=false)}}
+</form>

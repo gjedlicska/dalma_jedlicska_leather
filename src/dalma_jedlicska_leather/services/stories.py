@@ -55,7 +55,6 @@ stories = [
                 "porcelain",
             ),
             StoryImage(
-
                 "/static/images/jedlicska_dalma_film_look_porcelain-54.jpg",
                 "/static/images/jedlicska_dalma_film_look_porcelain-54.jpg",
                 "brown",
@@ -77,14 +76,14 @@ stories = [
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "porcelain",
                 full_width=True,
-                width_percentage=0
+                width_percentage=0,
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "porcelain",
                 full_width=True,
-                width_percentage=0
+                width_percentage=0,
             ),
             # hack above
             StoryImage(
@@ -96,7 +95,7 @@ stories = [
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "porcelain",
-                width_percentage=75
+                width_percentage=75,
             ),
             # some fake gap creator images
             StoryImage(
@@ -104,21 +103,21 @@ stories = [
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "porcelain",
                 full_width=True,
-                width_percentage=0
+                width_percentage=0,
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "/static/images/jedlicska_dalma_film_look_porcelain-35.jpg",
                 "porcelain",
                 full_width=True,
-                width_percentage=0
+                width_percentage=0,
             ),
             # hack above
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-3.jpg",
                 "/static/images/jedlicska_dalma_film_look_porcelain-3.jpg",
                 "porcelain",
-                width_percentage=75
+                width_percentage=75,
             ),
             StoryImage(
                 "/static/images/jedlicska_dalma_film_look_porcelain-61.jpg",

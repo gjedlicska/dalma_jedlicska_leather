@@ -1,0 +1,46 @@
+{% macro main_button_get(text, relative_url, target, hx_button=true,
+push_url=false) -%}
+<div class="flex flex-grow pb-11 items-end">
+  <button
+    class="w-full h-10 bg-sand-dark flex justify-center items-center text-sm uppercase font-semibold tracking-wide-title"
+    {%
+    if
+    hx_button
+    %}
+    hx-get="{{ relative_url }}"
+    hx-target="{{ target }}"
+    hx-push-url="{% if push_url %}true{% else %}false{% endif %}"
+    {%
+    endif
+    %}
+  >
+    {{ _(text) }}
+  </button>
+</div>
+{%- endmacro %} {% macro back_button_get(text, relative_url, target,
+push_url=false) -%}
+<button
+  hx-get="{{ relative_url }}"
+  hx-target="{{ target }}"
+  hx-push-url="{% if push_url %}true{% else %}false{% endif %}"
+  class="flex items-center space-x-3"
+>
+  <svg
+    class="h-3"
+    version="1.1"
+    viewBox="0 0 16 32"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      transform="matrix(-1 0 0 1 14.672 0)"
+      d="m0.65147 2 12 13.5-12 14.5"
+      fill="none"
+      stroke="#000"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="3"
+    />
+  </svg>
+  <p class="uppercase text-xs">{{ _(text) }}</p>
+</button>
+{%- endmacro %}

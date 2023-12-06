@@ -9,12 +9,13 @@ class Model:
     name: str
     category: str
     prices: List[Price]
+    description: str
+    details: str
 
 
 @define
 class Product:
     id: str
-    description: str
     model: Model
     color: str
     cover_image: ImageData

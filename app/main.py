@@ -14,10 +14,14 @@ from fastapi.templating import Jinja2Templates
 from starlette_babel import LocaleMiddleware, get_translator
 from starlette_babel.contrib.jinja import configure_jinja_env
 
+from dalma_jedlicska_leather.domain.product import Product
+
 
 root_dir = Path(__file__).parent.parent
 
-supported_locales = [locale.value for locale in domain.locale.Locale]
+# TODO: re-enable proper translation
+# supported_locales = [locale.value for locale in domain.locale.Locale]
+supported_locales = [domain.locale.Locale.HU.value]
 shared_translator = get_translator()  # process global instance
 shared_translator.load_from_directories(
     [root_dir.joinpath("locales")]
@@ -35,7 +39,7 @@ async def create_context(
 ) -> dict[str, object]:
     model_categories = await product_handler.get_all_model_categories()
     model_categories.insert(0, ALL_CATEGORIES)
-    story_slugs = [ s.slug for s in await services.get_stories()]
+    story_slugs = [s.slug for s in await services.get_stories()]
     global_context = {
         "request": request,
         "supported_locales": supported_locales,
@@ -49,7 +53,7 @@ async def create_context(
 
 app = FastAPI(
     middleware=[
-        Middleware(LocaleMiddleware, locales=supported_locales, default_locale="en"),
+        Middleware(LocaleMiddleware, locales=supported_locales, default_locale="hu"),
         Middleware(
             TrustedHostMiddleware,
             allowed_hosts=[
@@ -89,33 +93,48 @@ async def home_page(request: Request) -> HTMLResponse:
     return response
 
 
-@app.get("/products/{product_id}", response_class=HTMLResponse)
-async def single_product_page(request: Request, product_id: str) -> HTMLResponse:
+async def _render_product_page(
+    request: Request, product_id: str, panel_template: str, page_version: str
+) -> HTMLResponse:
     product = await product_handler.get_product_by_id(product_id)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
-    related_products = await product_handler.get_related_products(product.id)
-    context = await create_context(
-        request,
-        {
-            "product": product,
+
+    context = await create_context(request, {"product": product})
+    # hey if we only want the panel info, just render that template
+    if request.headers.get("HX-Target") == "product_panel":
+        return cast(HTMLResponse, templates.TemplateResponse(panel_template, context))
+    else:
+        related_products = await product_handler.get_related_products(product.id)
+        context |= {
             "related_products": related_products,
             "active_category": product.model.category,
-        },
-    )
-    response = cast(HTMLResponse, templates.TemplateResponse("product.html", context))
-    return response
+            "product_page": page_version,
+        }
+        return cast(HTMLResponse, templates.TemplateResponse("product.html", context))
 
+
+@app.get("/products/{product_id}", response_class=HTMLResponse)
+async def single_product_page(request: Request, product_id: str) -> HTMLResponse:
+    return await _render_product_page(request, product_id, "components/product_details_panel.html", page_version="details")
+
+
+@app.get("/products/{product_id}/order", response_class=HTMLResponse)
+async def product_order_form(request: Request, product_id: str) -> HTMLResponse:
+    return await _render_product_page(request, product_id, "components/product_order_form.html", page_version="order")
+
+
+@app.get("/products/{product_id}/summary", response_class=HTMLResponse)
+async def product_order_summary(request: Request, product_id: str) -> HTMLResponse:
+    return await _render_product_page(request, product_id, "components/product_summary_panel.html", page_version="summary")
 
 @app.get("/products", response_class=HTMLResponse)
 async def products_page(request: Request, q: str | None = None) -> HTMLResponse:
     model = None if q == ALL_CATEGORIES else q
-    paginated_product_data = (
-        await product_handler.get_paginated_translated_products_with_gap_images(
-            # TODO: determine locale from request
-            services.products.ProductQuery(cursor=None, model=model, color=None),
-            domain.locale.Locale.HU,
-        )
+    paginated_product_data = await product_handler.get_paginated_translated_products_with_gap_images(
+        # TODO: determine locale from request
+        services.products.ProductQuery(cursor=None, model=model, color=None),
+        domain.locale.Locale.HU,
     )
     context = await create_context(
         request,
@@ -190,3 +209,7 @@ if _debug := os.getenv("DEBUG"):
     app.add_event_handler("shutdown", hot_reload.shutdown)
     templates.env.globals["DEBUG"] = _debug
     templates.env.globals["hot_reload"] = hot_reload
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", reload=True, host="0.0.0.0", reload_includes=["*.mo"])

@@ -24,8 +24,7 @@
                 on pause_play set $paused to true then send pause to .player end 
                 on start_play set $paused to false then trigger start(delay:0s) on me then send play to .player end 
                 on loaded[id == 1] trigger start(delay: 3s) on me end 
-                on start(delay) set $paused to false then send play to .player then cycle_right(delay) end 
-                on stop log 'stoped' "
+                on start(delay) set $paused to false then send play to .player then cycle_right(delay) end"
              id="slider_parent">
       <script type="text/hyperscript">
         def cycle_right(delay)

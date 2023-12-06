@@ -1,5 +1,5 @@
 <div class="flex text-sm font-medium tracking-wide-title">
-  <p>type</p>
+  <p>{{ _("type") }}</p>
   <div
     class="ml-20 text-sand-hover space-x-12 mt-[0.2rem] flex font-thin text-xs items-center"
   >
@@ -9,7 +9,7 @@
         class="uppercase group-hover:text-black transition-colors duration-300 {% if active_category == category %}text-black{% endif %}"
         hx-boost="true"
         href="/products?q={{ category }}"
-        >{{ category }}</a
+        >{{ _(category) }}</a
       >
       <svg
         class="h-2 group-hover:opacity-100 transition-opacity duration-300 {% if active_category == category %}opacity-100{% else %}opacity-0{% endif %}"

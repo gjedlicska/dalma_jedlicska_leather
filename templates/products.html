@@ -20,7 +20,7 @@
              hx-boost=true
              id="{{ product.product_data.id }}"
              class="group flex flex-col">
-            <div class="relative aspect-[1/1.5] transition-shadow duration-500 group-hover:shadow-md">
+            <div class="relative aspect-[1/1.5]">
               {{ lazy_image(product.product_data.cover_image.source, product.product_data.cover_image.low_res_source, product.product_data.cover_image.description, product.product_data.cover_image.description, intersect_reveal=true) }}
               <div class="absolute top-0 h-full w-full bg-white opacity-0 group-hover:opacity-20 transition-opacity ease-in duration-300 delay-100" />
             </div>

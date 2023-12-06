@@ -43,6 +43,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
   safelist: ["p-14"],
 };

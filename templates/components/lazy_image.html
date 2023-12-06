@@ -2,7 +2,6 @@
 intersect_reveal=true) -%}
 <div
   _="{% if intersect_reveal %}on intersection(intersecting) having threshold 0.2
-       log 'intersection'
        if intersecting transition *opacity to 1 else transition opacity to 0
      {% endif %}"
   class="relative w-full"
