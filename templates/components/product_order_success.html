@@ -1,0 +1,10 @@
+{% from "components/main_button.html" import main_button_get, back_button_get %}
+{{ back_button_get("back", "/products/{}".format(product.id), "#product_panel",
+push_url=true)}}
+<p class="uppercase text-xs tracking-wide-title">sikeres rendelés</p>
+<p class="text-xs tracking-wider leading-5">
+  A rendelést rögzítettük, hamarosan felvesszük önnel a kapcsolatot.
+</p>
+{{ main_button_get("tovább válogatok", "/products", "
+<body />
+", push_url=true)}}

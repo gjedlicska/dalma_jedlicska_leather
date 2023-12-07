@@ -1,6 +1,6 @@
 {% from "components/main_button.html" import main_button_get, back_button_get %}
 {{ back_button_get("back", "/products/{}".format(product.id), "#product_panel",
 push_url=true)}}
-<div>osszegzes</div>
-{{ main_button_get("confirm", "/products/{}/order".format(product.id),
+<p class="uppercase text-xs tracking-wide-title">összegzés</p>
+{{ main_button_get("tovább", "/products/{}/order".format(product.id),
 "#product_panel", push_url=true)}}

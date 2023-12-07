@@ -1,62 +1,33 @@
-{% from "components/main_button.html" import main_button_get, back_button_get %}
-{{ back_button_get("back", "/products/{}/summary".format(product.id),
-"#product_panel", push_url=true)}}
+{% macro input(type, name, required) -%}
+<input
+  class="block w-full text-sm text-stone-600 tracking-wider placeholder-sand-hover border-0 border-b-2 border-sand-dark transition-colors focus:ring-0 focus:border-sand-hover"
+  required="{% if required %}true{% else %}false{% endif %}"
+  name="{{ name }}"
+  placeholder="{{ _(name) }}"
+  type="{{ type }}"
+/>
+{%- endmacro %} {% from "components/main_button.html" import main_button_get,
+back_button_get %} {{ back_button_get("back",
+"/products/{}/summary".format(product.id), "#product_panel", push_url=true)}}
 <form
-  class="flex flex-col h-full"
+  class="flex flex-col h-full space-y-5"
   action="/products/{{product.id}}/order"
   method="post"
   hx-boost="true"
 >
-  <p>kapcsolattartasi adatok</p>
-  <input
-    type="email"
-    required="true"
-    name="message"
-    placeholder="{{ _('enter_your_email')}}"
-  />
-  <p>szamlazasi adatok</p>
-  <div class="flex">
-    <input
-      required="true"
-      name="Vezeteknev"
-      placeholder="vezeteknev"
-      type="text"
-    />
-    <input
-      required="true"
-      name="Keresztnev"
-      placeholder="keresztnev"
-      type="text"
-    />
+  <p class="uppercase text-xs tracking-wide-title">Kapcsolattartási adatok</p>
+  <div class="flex space-x-3">
+    {{ input("text", "last_name", required=true) }} {{ input("text",
+    "first_name", required=true) }}
   </div>
-  <div>
-    <input
-      required="true"
-      name="iranyitoszam"
-      placeholder="iranyitoszam"
-      type="text"
-    />
-    <input
-      required="true"
-      name="telepules"
-      placeholder="telepules"
-      type="text"
-    />
-    <input
-      required="true"
-      name="utca"
-      placeholder="utca, hazszam"
-      type="text"
-    />
-    <input
-      required="false"
-      name="telefonszam"
-      placeholder="+36/30-123123"
-      type="text"
-    />
+  {{ input("email", "email", required=true) }} {{ input("tel", "phone",
+  required=false) }}
+  <p class="pt-5 uppercase text-xs tracking-wide-title">Számlázási adatok</p>
+  <div class="flex space-x-3">
+    <div class="w-1/3">{{ input("text", "zip", required=true) }}</div>
+    {{ input("text", "city", required=true) }}
   </div>
-
-  {{ main_button_get("finalize_order",
-  "/products/{}/summary".format(product.id), "#product_panel",
-  hx_button=false)}}
+  {{ input("text", "address", required=true) }} {{
+  main_button_get("finalize_order", "/products/{}/summary".format(product.id),
+  "#product_panel", hx_button=false)}}
 </form>

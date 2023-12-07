@@ -1,10 +1,11 @@
+from logging import lastResort
 import os
 from pathlib import Path
-from typing import cast
+from typing import Annotated, cast
 
 import arel
 from dalma_jedlicska_leather import services, domain, repositories
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Form
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -13,6 +14,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette_babel import LocaleMiddleware, get_translator
 from starlette_babel.contrib.jinja import configure_jinja_env
+from mailjet_rest import Client
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 from dalma_jedlicska_leather.domain.product import Product
 
@@ -32,6 +36,17 @@ product_handler = services.products.ProductHandler(
 )
 
 ALL_CATEGORIES = "all"
+
+
+class Settings(BaseSettings):
+    mj_api_key_public: str = Field()
+    mj_api_key_private: str = Field()
+    mj_sender_adress: str = Field()
+
+
+SETTINGS = Settings()
+
+mailjet = Client(auth=(SETTINGS.mj_api_key_public, SETTINGS.mj_api_key_private) , version='v3.1')
 
 
 async def create_context(
@@ -93,12 +108,17 @@ async def home_page(request: Request) -> HTMLResponse:
     return response
 
 
-async def _render_product_page(
-    request: Request, product_id: str, panel_template: str, page_version: str
-) -> HTMLResponse:
+async def _get_product_or_404(product_id: str) -> Product:
     product = await product_handler.get_product_by_id(product_id)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
+    return product
+
+
+async def _render_product_page(
+    request: Request, product_id: str, panel_template: str, page_version: str
+) -> HTMLResponse:
+    product = await _get_product_or_404(product_id)
 
     context = await create_context(request, {"product": product})
     # hey if we only want the panel info, just render that template
@@ -116,17 +136,75 @@ async def _render_product_page(
 
 @app.get("/products/{product_id}", response_class=HTMLResponse)
 async def single_product_page(request: Request, product_id: str) -> HTMLResponse:
-    return await _render_product_page(request, product_id, "components/product_details_panel.html", page_version="details")
+    return await _render_product_page(
+        request,
+        product_id,
+        "components/product_details_panel.html",
+        page_version="details",
+    )
 
 
 @app.get("/products/{product_id}/order", response_class=HTMLResponse)
 async def product_order_form(request: Request, product_id: str) -> HTMLResponse:
-    return await _render_product_page(request, product_id, "components/product_order_form.html", page_version="order")
+    return await _render_product_page(
+        request, product_id, "components/product_order_form.html", page_version="order"
+    )
+
+@app.get("/products/{product_id}/success", response_class=HTMLResponse)
+async def product_order_success(request: Request, product_id: str) -> HTMLResponse:
+    return await _render_product_page(
+        request, product_id, "components/product_order_success.html", page_version="success"
+    )
+
+@app.post("/products/{product_id}/order")
+async def product_order(
+    _: Request,
+    product_id: str,
+    email: Annotated[str, Form()],
+    first_name: Annotated[str, Form()],
+    last_name: Annotated[str, Form()],
+    zip: Annotated[str, Form()],
+    city: Annotated[str, Form()],
+    address: Annotated[str, Form()],
+    phone: Annotated[str | None, Form()] = None,
+):
+    product = await _get_product_or_404(product_id)
+    print(email, first_name, last_name, zip, city, phone)
+    data = {
+        "Messages": [
+            {
+                "From": {"Email": SETTINGS.mj_sender_adress, "Name": "Dalma Jedlicska"},
+                "To": [{"Email": email, "Name": f"{first_name} {last_name}"}],
+                "Subject": "Rendeles visszaigazolas",
+                "TextPart": "Koszonjuk a rendelest",
+                "HTMLPart": f"""<h3>Köszönjük a rendelésed {first_name}!<h3/>
+                <br/><br/><p>Hamarosan keresni fogunk.<p/><br/><p>Udv Dalma<p/>""",
+            },
+            {
+                "From": {"Email": SETTINGS.mj_sender_adress, "Name": "Dalma Jedlicska"},
+                "To": [{"Email": SETTINGS.mj_sender_adress, "Name": "Jedlicraft Bt."}],
+                "Subject": "Rendeles ertesito",
+                "TextPart": "Uj rendeles erkezett",
+                "HTMLPart": f"""<h3>{last_name} {first_name} uj rendelest adott le!<h3/>
+<br/><br/><p>{product.model.name} {product.model.category} {product_id} termekre.<br/>Adatok:<br/>{email} {zip} {city} {address}<p/>""",
+            }
+        ]
+    }
+    # TODO: move this call to a background job, it's costly
+    mailjet.send.create(data=data)
+    # redirecting with a see other status, turns post into get
+    return RedirectResponse(f"/products/{product_id}/success", status_code=303)
 
 
 @app.get("/products/{product_id}/summary", response_class=HTMLResponse)
 async def product_order_summary(request: Request, product_id: str) -> HTMLResponse:
-    return await _render_product_page(request, product_id, "components/product_summary_panel.html", page_version="summary")
+    return await _render_product_page(
+        request,
+        product_id,
+        "components/product_summary_panel.html",
+        page_version="summary",
+    )
+
 
 @app.get("/products", response_class=HTMLResponse)
 async def products_page(request: Request, q: str | None = None) -> HTMLResponse:
@@ -212,4 +290,5 @@ if _debug := os.getenv("DEBUG"):
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("app.main:app", reload=True, host="0.0.0.0", reload_includes=["*.mo"])

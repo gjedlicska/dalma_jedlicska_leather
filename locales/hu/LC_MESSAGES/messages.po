@@ -62,3 +62,27 @@ msgstr "típus"
 
 msgid "order"
 msgstr "rendelés"
+
+msgid "back"
+msgstr "vissza"
+
+msgid "first_name"
+msgstr "keresztnév"
+
+msgid "last_name"
+msgstr "vezetéknév"
+
+msgid "phone"
+msgstr "+36/30-1234567"
+
+msgid "zip"
+msgstr "irányítószám"
+
+msgid "city"
+msgstr "város"
+
+msgid "address"
+msgstr "utca, házszám"
+
+msgid "finalize_order"
+msgstr "rendelés véglegesitése"
