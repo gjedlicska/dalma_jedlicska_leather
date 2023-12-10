@@ -10,6 +10,7 @@ class HomeImageData(ImageData):
     height_sixth: int
     z_index: int
     ratio: str
+    alignment: str = "center"
     image_link: ImageLink | None = field(default=None)
 
 
@@ -57,6 +58,7 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
             4,
             1,
             ratio="1 / 1",
+            alignment="start"
         ),
         HomeImageData(
             "/static/images/home/jedlicska_dalma_collection -173.webp",
