@@ -5,22 +5,26 @@
   font-family: Cabin;
   src: url("/static/fonts/Cabin-Regular.ttf") format("opentype");
   font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
   font-family: Cabin;
   src: url("/static/fonts/Cabin-Medium.ttf") format("opentype");
   font-weight: 500;
+  font-display: swap;
 }
 
 @font-face {
   font-family: Cabin;
   src: url("/static/fonts/Cabin-SemiBold.ttf") format("opentype");
   font-weight: 600;
+  font-display: swap;
 }
 
 @font-face {
   font-family: Cabin;
   src: url("/static/fonts/Cabin-Bold.ttf") format("opentype;");
   font-weight: 700;
+  font-display: swap;
 }
