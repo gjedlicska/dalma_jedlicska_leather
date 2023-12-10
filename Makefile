@@ -11,7 +11,7 @@ pybabel-compile:
 	pybabel compile -d locales
 
 css-compile:
-	tailwindcss -i tailwindcss/input.css -c tailwind.config.js -o ./static/css/style.css --minify
+	tailwindcss -i ./tailwindcss/input.css -c ./tailwind.config.js -o ./static/css/style.css --minify
 
 compile:
 	make pybabel-compile && make css-compile
