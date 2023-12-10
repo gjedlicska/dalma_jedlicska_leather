@@ -1,4 +1,3 @@
-from logging import lastResort
 import os
 from pathlib import Path
 from typing import Annotated, cast
@@ -213,6 +212,7 @@ async def products_page(request: Request, q: str | None = None) -> HTMLResponse:
         # TODO: determine locale from request
         services.products.ProductQuery(cursor=None, model=model, color=None),
         domain.locale.Locale.HU,
+        frequency=6,
     )
     context = await create_context(
         request,

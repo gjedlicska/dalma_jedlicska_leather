@@ -17,7 +17,6 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
     return [
         HomeImageData(
             "/static/images/jedlicska_dalma_film_look_brown-59.webp",
-            "/static/images/jedlicska_dalma_film_look_brown-59_blur.webp",
             "foobar",
             height_sixth=6,
             z_index=0,
@@ -26,7 +25,6 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
         ),
         HomeImageData(
             "/static/images/jedlicska_dalma_film_look_porcelain-18.webp",
-            "/static/images/jedlicska_dalma_film_look_porcelain-18_blur.webp",
             "DUMMY THINGHY",
             4,
             3,
@@ -34,7 +32,6 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
         ),
         HomeImageData(
             "/static/images/jedlicska_dalma_film_look_porcelain-26.webp",
-            "/static/images/jedlicska_dalma_film_look_porcelain-26_blur.webp",
             "DUMMY THINGHY",
             5,
             2,
@@ -42,7 +39,6 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
         ),
         HomeImageData(
             "/static/images/jedlicska_dalma_collection -141.webp",
-            "/static/images/jedlicska_dalma_collection -141_blur.webp",
             "DUMMY THINGHY",
             6,
             1,
@@ -50,7 +46,6 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
         ),
         HomeImageData(
             "/static/images/dalma-jedlicska-leather-15.webp",
-            "/static/images/dalma-jedlicska-leather-15_blur.webp",
             "DUMMY THINGHY",
             4,
             2,
