@@ -1,10 +1,10 @@
 {% macro lazy_image(source, low_res_source, alt, id, notify_target=none,
-intersect_reveal=true) -%}
+intersect_reveal=true, h_full=false) -%}
 <div
   _="{% if intersect_reveal %}on intersection(intersecting) having threshold 0.2
        if intersecting transition *opacity to 1 else transition opacity to 0
      {% endif %}"
-  class="relative w-full"
+  class="relative w-full {% if h_full %}h-full{% endif %}"
 >
   <img
     _="init if my complete is false send show to the next <div/> then set my *opacity to 0 end

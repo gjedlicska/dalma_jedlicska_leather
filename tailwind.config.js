@@ -44,5 +44,5 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/forms")],
-  safelist: ["p-14"],
+  safelist: ["p-14", "h-1/6", "h-2/6", "h-3/6", "h-4/6", "h-5/6"],
 };

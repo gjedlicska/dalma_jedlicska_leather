@@ -11,11 +11,10 @@
          class="relative h-full overflow-x-scroll scroll-smooth snap-x scrollbar-hide flex items-center -space-x-14 flex-grow">
       {% for image in slideshow_images %}
       <div id="{{ 'img_{}'.format(loop.index) }}"
-           class="relative snap-start"
-             style="height: {{ image.height_sixth / 6 * 100 }}%;
-                    aspect-ratio: {{ image.ratio }};
-                    z-index: {{ image.z_index }}">
-          {{ lazy_image(image.source, image.low_res_source, image.description, loop.index, notify_target='#slider_parent', intersect_reveal=false) }}
+           class="relative snap-start {% if image.height_sixth == 6 %}h-full{% else %}h-{{image.height_sixth}}/6{% endif %}"
+           style="aspect-ratio: {{ image.ratio }};
+                  z-index: {{ image.z_index }}">
+          {{ lazy_image(image.source, image.low_res_source, image.description, loop.index, notify_target='#slider_parent', intersect_reveal=false, h_full=true) }}
         </div>
       {% endfor %}
     </div>
