@@ -34,8 +34,7 @@ module.exports = {
         "ultra-wide": ".9rem",
       },
       fontSize: {
-        nav: "0.6875rem",
-        // "small-base":
+        nav: "0.75rem",
       },
       cursor: {
         left: "url(/static/left_arrow.svg), pointer",
