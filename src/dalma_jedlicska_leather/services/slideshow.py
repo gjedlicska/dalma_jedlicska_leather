@@ -83,10 +83,10 @@ def get_slideshow_images() -> Sequence[HomeImageData]:
             ratio="1 / 1",
         ),
         HomeImageData(
-            "/static/images/home/jedlicska_dalma_film_look_brown-64_end.webp",
+            "/static/images/home/jedlicska_dalma_film_look_brown-64.webp",
             "DUMMY THINGHY",
             6,
             0,
-            ratio="1 / 2",
+            ratio="3 / 2",
         ),
     ]
