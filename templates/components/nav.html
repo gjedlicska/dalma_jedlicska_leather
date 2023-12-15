@@ -52,7 +52,9 @@ current_page = request.url.path == '/' + target -%}
   class="sticky top-0 z-10 bg-white flex h-40 text-nav tracking-widest uppercase"
 >
   <div class="w-1/6 flex items-center justify-center">
-    <a class="h-14" href="/">{% include "components/logo.html" %}</a>
+    <a class="h-14" href="/" aria-label="Go to Dalma's home page"
+      >{% include "components/logo.html" %}</a
+    >
   </div>
   <div class="flex items-center space-x-18 flex-grow">
     {{ nav_link("products", model_categories, menu_item_query=true) }} {{

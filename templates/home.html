@@ -60,20 +60,22 @@
         catch e
         end
       </script>
-      <button class="w-[15%] h-full cursor-left pointer-events-auto" _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"></button>
+      <button aria-label="Previous image" class="w-[15%] h-full cursor-left pointer-events-auto" _="on click send stop to #slider_parent then move_left() then send start(delay: 10s) to #slider_parent"></button>
         <div class="flex justify-center pointer-events-auto h-5">
         <button class="player"
                 style="display:none"
+                aria-label="Pause image slideshow"
                 _=" on click send pause_play to #slider_parent on play show me on pause hide me ">
 
           {% include "components/pause.svg" %}
         </button>
         <button class="player"
+                aria-label="Start image slideshow"
                 _=" on click send start_play to #slider_parent on play hide me on pause show me ">
           {% include "components/play.svg" %}
         </button>
         </div>
-      <button class="w-[15%] h-full cursor-right pointer-events-auto" _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"></button>
+      <button aria-label="Next image" class="w-[16%] h-full cursor-right pointer-events-auto" _="on click send stop to #slider_parent then move_right() then send start(delay: 5s) to #slider_parent"></button>
     </div>
   </div>
 {% endblock content %}
