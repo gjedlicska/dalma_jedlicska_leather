@@ -27,7 +27,7 @@ toggle_text(heading, content) -%}
 {%- endmacro %}
 
 <p class="uppercase text-xl tracking-very-wide font-medium">
-  {{ product.model.category }}
+  {{product.model.name}} {{ product.model.category }}
 </p>
 {{ price_display(product.model.prices[0]) }}
 <p class="text-xs tracking-wider leading-5 whitespace-pre-wrap">

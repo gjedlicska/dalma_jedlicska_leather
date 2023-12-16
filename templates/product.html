@@ -68,14 +68,17 @@
     <div class="h-40 flex space-x-4">
       {% for related_product in related_products %}
       <a
-        class="h-full aspect-square bg-gray-50"
+        class="relative h-full aspect-[6/7] group"
         href="/products/{{related_product.id}}"
+        title="{{related_product.model.name}} {{ related_product.model.category }}"
+        hx-boost=true
       >
         <img
-          class="object-cover"
+          class="w-full h-full object-cover"
           src="{{ related_product.display_images[0].source }}"
           alt="{{related_product.display_images[0].description}}"
         />
+        <div class="absolute top-0 h-full w-full bg-sand-light opacity-0 group-hover:opacity-50 transition-opacity ease-in duration-300 delay-100"></div>
       </a>
       {% endfor %}
     </div>
