@@ -8,7 +8,7 @@ from fastapi import FastAPI, HTTPException, Request, Form
 from fastapi.middleware import Middleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette_babel import LocaleMiddleware, get_translator
@@ -266,6 +266,12 @@ async def set_language(request: Request, lang: str) -> RedirectResponse:
     response = RedirectResponse(url=referer)
     response.set_cookie("language", lang)
     return response
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+async def robots() -> str:
+    return """User-Agent: *
+Disallow:
+"""
 
 
 @app.exception_handler(404)
